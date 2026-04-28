@@ -70,6 +70,11 @@ function moveRight() {
 function jump() {
 
     if (script.gameManager && script.gameManager.isGameOver) {
+
+        if (script.gameManager.restartGame) {
+            script.gameManager.restartGame();
+        }
+
         return;
     }
 

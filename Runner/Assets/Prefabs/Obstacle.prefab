@@ -57,6 +57,7 @@
     "":
       targetObject: !<reference.SceneObject> 28fad40b-b0b2-4955-a3a0-db01f2a036ab
       config: !<reference.ScriptComponent> 30c255f4-8d61-4450-b454-76896d2fa707
+      gameManager: !<reference.ScriptComponent> 9db2195e-3371-497d-93a0-65d4cdb959d4
   ScriptTypes:
     "":
       {}

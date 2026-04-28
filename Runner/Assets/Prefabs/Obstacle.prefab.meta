@@ -62,13 +62,14 @@
   Enabled: true
   ScriptAsset: !<reference> 89f2e97c-3649-4a46-8eb2-6198e2bc2d1f
   ScriptInputsDefault:
-    {}
+    gameManager: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
       targetObject: !<reference.SceneObject> 28fad40b-b0b2-4955-5c5f-24fe0d5fc954
       config: !<reference.ScriptComponent> 30c255f4-8d61-4450-b454-76896d2fa707
+      gameManager: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     "":
       {}

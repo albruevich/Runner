@@ -3,7 +3,7 @@
 //@input Component.ScriptComponent gameManager
 //@input Component.ScriptComponent config
 //@input Asset.ObjectPrefab obstaclePrefab
-//@input int poolSize = 8
+//@input int poolSize = 10
 
 var spawnTimer = 0;
 var nextObstacleIndex = 0;
@@ -30,12 +30,13 @@ function initialize() {
         var obstacleScript = obstacle.getComponent("Component.ScriptComponent");
         if (obstacleScript) {
             obstacleScript.config = script.config;
+            obstacleScript.gameManager = script.gameManager;
         }
 
         script.pool.push(obstacle);
     }
 
-    spawnTimer = 0;
+    restartSpawner();
 }
 
 function updateSpawner() {
@@ -60,11 +61,10 @@ function spawnObstacle() {
     var obstacle = getNextInactiveObstacle();
 
     if (!obstacle) {
-        print("ObstacleSpawner: no inactive obstacles available.");
         return;
     }
 
-    var laneIndex = Math.floor(Math.random() * 3) - 1; // -1, 0, 1
+    var laneIndex = Math.floor(Math.random() * 3) - 1;
 
     var transform = obstacle.getTransform();
     var pos = transform.getLocalPosition();
@@ -90,6 +90,21 @@ function getNextInactiveObstacle() {
 
     return null;
 }
+
+function restartSpawner() {
+    spawnTimer = 0;
+    nextObstacleIndex = 0;
+
+    if (!script.pool) {
+        return;
+    }
+
+    for (var i = 0; i < script.pool.length; i++) {
+        script.pool[i].enabled = false;
+    }
+}
+
+script.restartSpawner = restartSpawner;
 
 script.createEvent("OnStartEvent").bind(initialize);
 script.createEvent("UpdateEvent").bind(updateSpawner);

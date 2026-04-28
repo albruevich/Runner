@@ -27,6 +27,7 @@
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     config: false
+    spawner: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -37,6 +38,7 @@
     []
   DefaultScriptInputs:
     - config: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      spawner: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
       {}

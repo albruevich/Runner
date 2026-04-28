@@ -1,0 +1,62 @@
+- !<ObjectPrefab/b94ff414-d0a9-4c0a-8391-79ed4cb807c2>
+  PackagePath: ""
+  objects:
+    - !<own> 50ce0f03-92ec-4c01-aa67-6638211f57ab
+  LazyLoading: false
+  RetainAssets: true
+  PreviewEnvironment: !<reference> 00000000-0000-0000-0000-000000000000
+- !<RenderMeshVisual/0b904c6d-2725-4212-9ea8-5c13fdd2e5a1>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 250c31b7-bc4a-458f-8ef7-07985eb356d8
+  Mesh: !<reference> 22c699d3-3871-4034-afac-5b7ab2864963
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
+- !<ScriptComponent/410c6cd8-a4cf-4aec-a9d1-768cdb856e26>
+  PrefabRemaps:
+    []
+  Name: Prize
+  Enabled: true
+  ScriptAsset: !<reference> 4ca11c6d-7d87-4561-b837-858f2bb5b153
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      gameManager: !<reference.ScriptComponent> 9db2195e-3371-497d-93a0-65d4cdb959d4
+      config: !<reference.ScriptComponent> 30c255f4-8d61-4450-b454-76896d2fa707
+  ScriptTypes:
+    "":
+      {}
+- !<SceneObject/50ce0f03-92ec-4c01-aa67-6638211f57ab>
+  PrefabRemaps:
+    - 0b904c6d-2725-4212-9ea8-5c13fdd2e5a1: 0b904c6d-2725-4212-6157-a3ec022d1a5e
+    - 410c6cd8-a4cf-4aec-a9d1-768cdb856e26: 410c6cd8-a4cf-4aec-562e-8973247a91d9
+    - 50ce0f03-92ec-4c01-aa67-6638211f57ab: 50ce0f03-92ec-4c01-5598-99c7dee0a854
+  Name: Prize
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 6.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 5.000000, y: 5.000000, z: 5.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 0b904c6d-2725-4212-9ea8-5c13fdd2e5a1
+    - !<own> 410c6cd8-a4cf-4aec-a9d1-768cdb856e26

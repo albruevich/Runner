@@ -1,20 +1,20 @@
-- !<AssetImportMetadata/47f97ca2-ee2d-444b-bf00-411346b2badd>
+- !<AssetImportMetadata/96e89893-53b7-4c0e-abd5-8c1231042098>
   ImportedAssetIds:
-    JavaScriptAsset: !<reference> 6c89f706-07d6-4f44-a29d-f190d44aa73c
+    JavaScriptAsset: !<reference> 4ca11c6d-7d87-4561-b837-858f2bb5b153
   ImporterName: JavaScriptAssetImporter
-  PrimaryAsset: !<reference> 6c89f706-07d6-4f44-a29d-f190d44aa73c
+  PrimaryAsset: !<reference> 4ca11c6d-7d87-4561-b837-858f2bb5b153
   PackageType: NotAPackage
   LegacyPackagePolicy: ~
   ExtraData:
     {}
   AssetDataMap:
-    JavaScriptAsset: !<own> c0434a21-3f9e-44d0-a5ad-83b74b558117
+    JavaScriptAsset: !<own> 8ab9ad29-a97d-43b4-ba50-31d119ce25ad
   DependentFiles:
     []
   ImporterSettings: !<AssetImporterSettings>
     {}
   CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
-- !<ScriptAssetData/c0434a21-3f9e-44d0-a5ad-83b74b558117>
+- !<ScriptAssetData/8ab9ad29-a97d-43b4-ba50-31d119ce25ad>
   SvgIcon: ""
   SetupScript:
     code: ""
@@ -22,15 +22,12 @@
   VersionMajor: 0
   VersionMinor: 0
   VersionPatch: 0
-  ComponentUid: e11c6dc9-fbce-4145-aebb-a79a8a07b2b9
+  ComponentUid: 575618c2-0665-4892-b482-0141f7d008a4
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     config: false
     gameManager: false
-    obstacleSpawner: false
-    prizeSpawner: false
-    targetObject: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -41,10 +38,7 @@
     []
   DefaultScriptInputs:
     - gameManager: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
-      targetObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       config: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
-      obstacleSpawner: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
-      prizeSpawner: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
       {}

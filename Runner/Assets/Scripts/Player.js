@@ -3,7 +3,8 @@
 //@input Component.ScriptComponent gameManager
 //@input SceneObject targetObject
 //@input Component.ScriptComponent config
-//@input Component.ScriptComponent spawner
+//@input Component.ScriptComponent obstacleSpawner
+//@input Component.ScriptComponent prizeSpawner
 
 var currentLane = 0; // -1 = left, 0 = center, 1 = right
 
@@ -139,6 +140,7 @@ function updatePlayer() {
     }
 
     checkObstacleCollisions(pos);
+    checkPrizeCollisions(pos);
     transform.setLocalPosition(pos);
 }
 
@@ -154,11 +156,11 @@ function smoothStep(t) {
 
 function checkObstacleCollisions(playerPos) {
 
-    if (!script.spawner || !script.spawner.pool) {
+    if (!script.obstacleSpawner || !script.obstacleSpawner.pool) {
         return;
     }
 
-    var obstacles = script.spawner.pool;
+    var obstacles = script.obstacleSpawner.pool;
 
     for (var i = 0; i < obstacles.length; i++) {
         var obstacle = obstacles[i];
@@ -181,18 +183,50 @@ function checkObstacleCollisions(playerPos) {
     }
 }
 
+function checkPrizeCollisions(playerPos) {
+
+    if (!script.prizeSpawner || !script.prizeSpawner.pool) {
+        return;
+    }
+
+    var prizes = script.prizeSpawner.pool;
+
+    for (var i = 0; i < prizes.length; i++) {
+        var prize = prizes[i];
+
+        if (!prize || !prize.enabled) {
+            continue;
+        }
+
+        var prizePos = prize.getTransform().getLocalPosition();
+
+        var dz = Math.abs(playerPos.z - prizePos.z);
+
+        var sameLane = Math.abs(playerPos.x - prizePos.x) < script.config.laneTolerance;
+        var closeEnough = dz < script.config.collisionZDistance;
+
+        if (sameLane && closeEnough) {
+            onCollectPrize(prize);
+        }
+    }
+}
+
+function onCollectPrize(prize) {
+    prize.enabled = false;
+
+    if (script.gameManager && script.gameManager.addScore) {
+        script.gameManager.addScore(1);
+        print("ok");
+    }
+}
+
 function onHitObstacle(obstacle) {
-    
+
     obstacle.enabled = false;
 
     if (script.gameManager) {
         script.gameManager.takeDamage();
     }
-
-    // later:
-    // loseLife();
-    // update UI
-    // game over after 3 hits
 }
 
 initialize();

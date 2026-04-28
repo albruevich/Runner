@@ -1,20 +1,20 @@
-- !<AssetImportMetadata/47f97ca2-ee2d-444b-bf00-411346b2badd>
+- !<AssetImportMetadata/3d5f0ced-c909-41e7-b53d-d07782d5a408>
   ImportedAssetIds:
-    JavaScriptAsset: !<reference> 6c89f706-07d6-4f44-a29d-f190d44aa73c
+    JavaScriptAsset: !<reference> 373d3198-abea-49bc-8b3d-6a3849e7c60b
   ImporterName: JavaScriptAssetImporter
-  PrimaryAsset: !<reference> 6c89f706-07d6-4f44-a29d-f190d44aa73c
+  PrimaryAsset: !<reference> 373d3198-abea-49bc-8b3d-6a3849e7c60b
   PackageType: NotAPackage
   LegacyPackagePolicy: ~
   ExtraData:
     {}
   AssetDataMap:
-    JavaScriptAsset: !<own> c0434a21-3f9e-44d0-a5ad-83b74b558117
+    JavaScriptAsset: !<own> 40594fe7-de09-41d1-b905-6477aeef0082
   DependentFiles:
     []
   ImporterSettings: !<AssetImporterSettings>
     {}
   CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
-- !<ScriptAssetData/c0434a21-3f9e-44d0-a5ad-83b74b558117>
+- !<ScriptAssetData/40594fe7-de09-41d1-b905-6477aeef0082>
   SvgIcon: ""
   SetupScript:
     code: ""
@@ -22,15 +22,14 @@
   VersionMajor: 0
   VersionMinor: 0
   VersionPatch: 0
-  ComponentUid: e11c6dc9-fbce-4145-aebb-a79a8a07b2b9
+  ComponentUid: f61e5e65-b8db-4757-8be8-71d787b6c053
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     config: false
     gameManager: false
     obstacleSpawner: false
-    prizeSpawner: false
-    targetObject: false
+    prizePrefab: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -41,10 +40,9 @@
     []
   DefaultScriptInputs:
     - gameManager: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
-      targetObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       config: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
       obstacleSpawner: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
-      prizeSpawner: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      prizePrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
       {}

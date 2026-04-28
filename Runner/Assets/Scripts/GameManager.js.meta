@@ -29,6 +29,7 @@
     config: false
     gameOverText: false
     hpText: false
+    scoreText: false
     spawner: false
   ScriptTypesHidden:
     {}
@@ -42,6 +43,7 @@
     - config: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
       spawner: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
       hpText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      scoreText: !<reference.Text> 00000000-0000-0000-0000-000000000000
       gameOverText: !<reference.Text> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -

@@ -10,6 +10,7 @@
     - !<own> 693a6c4e-f8f9-4910-b60e-8eadd90c0986
     - !<own> 43e11dcb-b4b0-4280-b4a8-39df4a637728
     - !<own> e7f9d62b-9a1c-499c-a059-ba583e785183
+    - !<own> dce87454-9b6d-4e7c-af4c-2a1a04f2a422
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       - id: 1
@@ -339,6 +340,22 @@
     []
   Components:
     - !<own> 99b49a3f-e612-432b-bf25-d44e60a3c630
+- !<SceneObject/16355489-a147-4270-b3a0-d9ddf4b1e6b4>
+  PrefabRemaps:
+    []
+  Name: ScoreText
+  Enabled: true
+  Layers: 1048576
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 8dd79c47-5932-4937-b545-ba52b516f180
+    - !<own> b9f41827-12a1-4a97-8502-41aef923701d
 - !<SceneObject/1d219458-bfa0-44bb-a06a-7ea7ad2f8d42>
   PrefabRemaps:
     []
@@ -367,6 +384,7 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> ebf75e1c-d82e-4e55-a584-c51f4fb483ad
+    - !<own> 16355489-a147-4270-b3a0-d9ddf4b1e6b4
     - !<own> 6f67a2d9-f429-4a6d-b1d7-ab951342e6b2
   Components:
     - !<own> b71800bf-2b86-4b77-9234-2c6848a24ca8
@@ -378,6 +396,10 @@
   Enabled: true
   ScriptAsset: !<reference> c44e349d-2eb0-40dc-a767-65bd0e247b0f
   ScriptInputsDefault:
+    prizePoolSize: true
+    prizeSpawnInterval: true
+    prizeY: true
+    prizeObstacleCheckZDistance: true
     collisionZDistance: true
     laneTolerance: true
     startHp: true
@@ -391,6 +413,10 @@
       obstacleY: !<float> 5.000000
       obstacleSpeed: !<float> 60.000000
       obstacleHideZ: !<float> 40.000000
+      prizePoolSize: 8
+      prizeSpawnInterval: !<float> 1.000000
+      prizeY: !<float> 6.000000
+      prizeObstacleCheckZDistance: !<float> 5.000000
       collisionZDistance: !<float> 8.000000
       laneTolerance: 0.500000
       startHp: 3
@@ -537,7 +563,7 @@
   PrefabRemaps:
     []
   Name: GameOverText
-  Enabled: false
+  Enabled: true
   Layers: 1048576
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -607,6 +633,39 @@
   MaskTexture: !<reference> 00000000-0000-0000-0000-000000000000
   RayTracing: !<reference> 00000000-0000-0000-0000-000000000000
   DevicePropertiesSource: !<reference> 00000000-0000-0000-0000-000000000000
+- !<ScreenTransform/8dd79c47-5932-4937-b545-ba52b516f180>
+  PrefabRemaps:
+    []
+  Name: Screen Transform
+  Enabled: true
+  IsAdvanced: false
+  Constraints:
+    pinToLeft: false
+    pinToTop: true
+    pinToRight: false
+    pinToBottom: false
+    fixedWidth: false
+    fixedHeight: false
+    deactivatedFixedSprite: false
+    deactivatedFixedPivot: false
+  Pivot: {x: 0.000000, y: 0.000000}
+  Transform:
+    position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    hasSegmentScaleCompensation: false
+  RawMode: true
+  ForceBasic: true
+  Anchor:
+    left: -1.000000
+    bottom: 0.912100
+    right: -0.256100
+    top: 1.000000
+  Offset:
+    left: 0.000000
+    bottom: -0.000006
+    right: 0.000000
+    top: -2.959006
 - !<ScreenRegionComponent/93841094-28e1-4bec-ad25-7525951bfcbd>
   PrefabRemaps:
     []
@@ -649,6 +708,7 @@
       config: !<reference.ScriptComponent> 30c255f4-8d61-4450-b454-76896d2fa707
       spawner: !<reference.ScriptComponent> 3b4a3655-d0de-41e3-be40-5ef96413e1bc
       hpText: !<reference.Text> 07a26f98-934b-462f-b175-1e3c207ee5b8
+      scoreText: !<reference.Text> b9f41827-12a1-4a97-8502-41aef923701d
       gameOverText: !<reference.Text> bcea7211-d5b0-4e88-8e28-29696d18a23e
   ScriptTypes:
     "":
@@ -686,6 +746,90 @@
     bottom: 0.000000
     right: 0.000000
     top: 0.000000
+- !<Text/b9f41827-12a1-4a97-8502-41aef923701d>
+  PrefabRemaps:
+    []
+  Name: Text
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Text: "Score:"
+  Editable: false
+  ShowEditingPreview: true
+  TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
+  EnableRichText: false
+  SizeToFit: true
+  FontSize: 36.000000
+  FontSource: !<reference> 00000000-0000-0000-0000-000000000000
+  FontWeight: 700
+  Italic: false
+  LayoutRect:
+    left: -7.500000
+    bottom: -2.250000
+    right: 7.500000
+    top: 2.250000
+  OverflowVertical: Overflow
+  OverflowHorizontal: Overflow
+  Fill: !<TextFill>
+    Mode: Solid
+    Color: {x: 0.134768, y: 1.000000, z: 0.190784, w: 1.000000}
+    Texture: !<reference> 00000000-0000-0000-0000-000000000000
+    ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+    TileCount: 5.000000
+    TileZone: Rect
+    TextureStretch: FitWidth
+  BlendMode: PremultipliedAlpha
+  Outline: !<OutlineSettings>
+    Enabled: false
+    Fill: !<TextFill>
+      Mode: Solid
+      Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+      Texture: !<reference> 00000000-0000-0000-0000-000000000000
+      ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      TileCount: 5.000000
+      TileZone: Rect
+      TextureStretch: FitWidth
+    Size: 0.250000
+  Dropshadow: !<DropshadowSettings>
+    Enabled: false
+    Fill: !<TextFill>
+      Mode: Solid
+      Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+      Texture: !<reference> 00000000-0000-0000-0000-000000000000
+      ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      TileCount: 5.000000
+      TileZone: Rect
+      TextureStretch: FitWidth
+    OffsetX: 0.250000
+    OffsetY: 0.250000
+  Background: !<BackgroundSettings>
+    Enabled: false
+    Fill: !<TextFill>
+      Mode: Solid
+      Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+      Texture: !<reference> 00000000-0000-0000-0000-000000000000
+      ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      TileCount: 5.000000
+      TileZone: Rect
+      TextureStretch: FitWidth
+    Margins:
+      left: 0.000000
+      bottom: 0.000000
+      right: 0.000000
+      top: 0.000000
+    CornerRadius: 0.000000
+  AdvancedLayout: !<TextAdvancedLayout>
+    ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
+    LetterSpacing: 0.000000
+    LineSpacing: 1.000000
+    CapitalizationOverride: None
+  DepthTest: false
+  TwoSided: false
 - !<Text/bcea7211-d5b0-4e88-8e28-29696d18a23e>
   PrefabRemaps:
     []
@@ -770,6 +914,40 @@
     CapitalizationOverride: None
   DepthTest: false
   TwoSided: false
+- !<SceneObject/dce87454-9b6d-4e7c-af4c-2a1a04f2a422>
+  PrefabRemaps:
+    []
+  Name: PrizeSpawner
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> e5b305a0-3dd6-4939-a3f4-b67bd73a6505
+- !<ScriptComponent/e5b305a0-3dd6-4939-a3f4-b67bd73a6505>
+  PrefabRemaps:
+    []
+  Name: PrizeSpawner
+  Enabled: true
+  ScriptAsset: !<reference> 373d3198-abea-49bc-8b3d-6a3849e7c60b
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      gameManager: !<reference.ScriptComponent> 9db2195e-3371-497d-93a0-65d4cdb959d4
+      config: !<reference.ScriptComponent> 30c255f4-8d61-4450-b454-76896d2fa707
+      obstacleSpawner: !<reference.ScriptComponent> 3b4a3655-d0de-41e3-be40-5ef96413e1bc
+      prizePrefab: !<reference.ObjectPrefab> b94ff414-d0a9-4c0a-8391-79ed4cb807c2
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/e7f9d62b-9a1c-499c-a059-ba583e785183>
   PrefabRemaps:
     []
@@ -837,7 +1015,8 @@
       gameManager: !<reference.ScriptComponent> 9db2195e-3371-497d-93a0-65d4cdb959d4
       targetObject: !<reference.SceneObject> 693a6c4e-f8f9-4910-b60e-8eadd90c0986
       config: !<reference.ScriptComponent> 30c255f4-8d61-4450-b454-76896d2fa707
-      spawner: !<reference.ScriptComponent> 3b4a3655-d0de-41e3-be40-5ef96413e1bc
+      obstacleSpawner: !<reference.ScriptComponent> 3b4a3655-d0de-41e3-be40-5ef96413e1bc
+      prizeSpawner: !<reference.ScriptComponent> e5b305a0-3dd6-4939-a3f4-b67bd73a6505
   ScriptTypes:
     "":
       {}

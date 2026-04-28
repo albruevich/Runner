@@ -33,6 +33,10 @@
     obstacleSpawnZ: false
     obstacleSpeed: false
     obstacleY: false
+    prizeObstacleCheckZDistance: false
+    prizePoolSize: false
+    prizeSpawnInterval: false
+    prizeY: false
     spawnInterval: false
     startHp: false
   ScriptTypesHidden:
@@ -50,6 +54,10 @@
       obstacleY: !<float> 1.000000
       obstacleSpeed: !<float> 20.000000
       obstacleHideZ: !<float> -20.000000
+      prizePoolSize: 8
+      prizeSpawnInterval: !<float> 1.000000
+      prizeY: !<float> 6.000000
+      prizeObstacleCheckZDistance: !<float> 5.000000
       collisionZDistance: !<float> 8.000000
       laneTolerance: 0.500000
       startHp: 3

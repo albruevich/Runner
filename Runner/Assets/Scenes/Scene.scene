@@ -275,7 +275,9 @@
   Enabled: true
   ScriptAsset: !<reference> c44e349d-2eb0-40dc-a767-65bd0e247b0f
   ScriptInputsDefault:
-    {}
+    collisionZDistance: true
+    laneTolerance: true
+    safeJumpHeight: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -286,6 +288,9 @@
       obstacleY: !<float> 5.000000
       obstacleSpeed: !<float> 60.000000
       obstacleHideZ: !<float> 40.000000
+      collisionZDistance: !<float> 8.000000
+      laneTolerance: 0.500000
+      safeJumpHeight: !<float> 18.000000
   ScriptTypes:
     "":
       {}
@@ -412,6 +417,7 @@
     "":
       targetObject: !<reference.SceneObject> 693a6c4e-f8f9-4910-b60e-8eadd90c0986
       config: !<reference.ScriptComponent> 30c255f4-8d61-4450-b454-76896d2fa707
+      spawner: !<reference.ScriptComponent> 3b4a3655-d0de-41e3-be40-5ef96413e1bc
   ScriptTypes:
     "":
       {}

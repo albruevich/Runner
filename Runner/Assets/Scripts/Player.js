@@ -2,6 +2,7 @@
 
 //@input SceneObject targetObject
 //@input Component.ScriptComponent config
+//@input Component.ScriptComponent spawner
 
 var currentLane = 0; // -1 = left, 0 = center, 1 = right
 
@@ -10,7 +11,7 @@ var jumpHeight = 40;
 
 var jumpUpSpeed = 20;
 var jumpDownSpeed = 3;
-var hangTime = 0.2; // pause at the top
+var hangTime = 0.1; // pause at the top
 
 var jumpProgress = 0;
 var hangTimer = 0;
@@ -40,10 +41,18 @@ function initialize() {
 }
 
 function moveLeft() {
+    if (isJumping) {
+        return;
+    }
+
     currentLane = Math.max(-1, currentLane - 1);
 }
 
 function moveRight() {
+    if (isJumping) {
+        return;
+    }
+
     currentLane = Math.min(1, currentLane + 1);
 }
 
@@ -103,6 +112,7 @@ function updatePlayer() {
         pos.y = baseY;
     }
 
+    checkObstacleCollisions(pos);
     transform.setLocalPosition(pos);
 }
 
@@ -114,6 +124,46 @@ function lerp(a, b, t) {
 function smoothStep(t) {
     t = Math.min(Math.max(t, 0), 1);
     return t * t * (3 - 2 * t);
+}
+
+function checkObstacleCollisions(playerPos) {
+
+    if (!script.spawner || !script.spawner.pool) {
+        return;
+    }
+
+    var obstacles = script.spawner.pool;
+
+    for (var i = 0; i < obstacles.length; i++) {
+        var obstacle = obstacles[i];
+
+        if (!obstacle || !obstacle.enabled) {
+            continue;
+        }
+
+        var obstaclePos = obstacle.getTransform().getLocalPosition();
+
+        var dz = Math.abs(playerPos.z - obstaclePos.z);
+
+        var sameLane = Math.abs(playerPos.x - obstaclePos.x) < script.config.laneTolerance;
+        var closeEnough = dz < script.config.collisionZDistance;
+        var notJumping = !isJumping;
+
+        if (sameLane && closeEnough && notJumping) {
+            onHitObstacle(obstacle);
+        }
+    }
+}
+
+function onHitObstacle(obstacle) {
+    print("Hit obstacle");
+
+    obstacle.enabled = false;
+
+    // later:
+    // loseLife();
+    // update UI
+    // game over after 3 hits
 }
 
 initialize();
@@ -163,5 +213,5 @@ script.createEvent("KeyPressEvent").bind(function (eventData) {
         moveRight();
     } else if (key === 16777235 || key === 32) { // Up Arrow and Space bar
         jump();
-    } 
+    }
 });

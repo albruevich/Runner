@@ -26,7 +26,9 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
+    collisionZDistance: false
     laneDistance: false
+    laneTolerance: false
     obstacleHideZ: false
     obstacleSpawnZ: false
     obstacleSpeed: false
@@ -47,6 +49,8 @@
       obstacleY: !<float> 1.000000
       obstacleSpeed: !<float> 20.000000
       obstacleHideZ: !<float> -20.000000
+      collisionZDistance: !<float> 8.000000
+      laneTolerance: 0.500000
   ScriptTypes:
     -
       {}

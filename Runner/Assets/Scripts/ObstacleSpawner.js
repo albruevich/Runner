@@ -4,7 +4,6 @@
 //@input Asset.ObjectPrefab obstaclePrefab
 //@input int poolSize = 8
 
-var pool;
 var spawnTimer = 0;
 var nextObstacleIndex = 0;
 
@@ -19,7 +18,7 @@ function initialize() {
         return;
     }
 
-    pool = [];
+    script.pool = [];
 
     for (var i = 0; i < script.poolSize; i++) {
         var obstacle = script.obstaclePrefab.instantiate(null);
@@ -32,14 +31,14 @@ function initialize() {
             obstacleScript.config = script.config;
         }
 
-        pool.push(obstacle);
+         script.pool.push(obstacle);
     }
 
     spawnTimer = 0;
 }
 
 function updateSpawner() {
-    if (!script.config || !pool || pool.length === 0) {
+    if (!script.config || !script.pool ||  script.pool.length === 0) {
         return;
     }
 
@@ -73,12 +72,12 @@ function spawnObstacle() {
 }
 
 function getNextInactiveObstacle() {
-    for (var i = 0; i < pool.length; i++) {
-        var index = (nextObstacleIndex + i) % pool.length;
-        var obstacle = pool[index];
+    for (var i = 0; i <  script.pool.length; i++) {
+        var index = (nextObstacleIndex + i) %  script.pool.length;
+        var obstacle =  script.pool[index];
 
         if (!obstacle.enabled) {
-            nextObstacleIndex = (index + 1) % pool.length;
+            nextObstacleIndex = (index + 1) % script.pool.length;
             return obstacle;
         }
     }

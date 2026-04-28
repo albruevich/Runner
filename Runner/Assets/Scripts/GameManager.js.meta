@@ -27,6 +27,8 @@
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     config: false
+    gameOverText: false
+    hpText: false
     spawner: false
   ScriptTypesHidden:
     {}
@@ -39,6 +41,8 @@
   DefaultScriptInputs:
     - config: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
       spawner: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      hpText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      gameOverText: !<reference.Text> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
       {}

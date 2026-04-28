@@ -8,7 +8,7 @@
 var currentLane = 0; // -1 = left, 0 = center, 1 = right
 
 var moveSpeed = 20;
-var jumpHeight = 40;
+var jumpHeight = 30;
 
 var jumpUpSpeed = 20;
 var jumpDownSpeed = 3;
@@ -182,8 +182,7 @@ function checkObstacleCollisions(playerPos) {
 }
 
 function onHitObstacle(obstacle) {
-    print("Hit obstacle");
-
+    
     obstacle.enabled = false;
 
     if (script.gameManager) {

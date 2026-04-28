@@ -2,8 +2,14 @@
 
 //@input SceneObject targetObject
 //@input Component.ScriptComponent config
+//@input Component.ScriptComponent gameManager
 
 function updateObstacle() {
+
+    if (script.gameManager && script.gameManager.isGameOver) {
+        return;
+    }
+
     if (!script.targetObject || !script.targetObject.enabled) {
         return;
     }

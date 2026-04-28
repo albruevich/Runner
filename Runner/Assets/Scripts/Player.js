@@ -1,5 +1,6 @@
 // Player.js
 
+//@input Component.ScriptComponent gameManager
 //@input SceneObject targetObject
 //@input Component.ScriptComponent config
 //@input Component.ScriptComponent spawner
@@ -41,6 +42,11 @@ function initialize() {
 }
 
 function moveLeft() {
+
+    if (script.gameManager && script.gameManager.isGameOver) {
+        return;
+    }
+
     if (isJumping) {
         return;
     }
@@ -49,6 +55,11 @@ function moveLeft() {
 }
 
 function moveRight() {
+
+    if (script.gameManager && script.gameManager.isGameOver) {
+        return;
+    }
+
     if (isJumping) {
         return;
     }
@@ -57,6 +68,11 @@ function moveRight() {
 }
 
 function jump() {
+
+    if (script.gameManager && script.gameManager.isGameOver) {
+        return;
+    }
+
     if (isJumping) {
         return;
     }
@@ -69,6 +85,11 @@ function jump() {
 }
 
 function updatePlayer() {
+
+    if (script.gameManager && script.gameManager.isGameOver) {
+        return;
+    }
+
     if (!script.targetObject || !script.config) {
         return;
     }
@@ -159,6 +180,10 @@ function onHitObstacle(obstacle) {
     print("Hit obstacle");
 
     obstacle.enabled = false;
+
+    if (script.gameManager) {
+        script.gameManager.takeDamage();
+    }
 
     // later:
     // loseLife();

@@ -1,5 +1,6 @@
 // ObstacleSpawner.js
 
+//@input Component.ScriptComponent gameManager
 //@input Component.ScriptComponent config
 //@input Asset.ObjectPrefab obstaclePrefab
 //@input int poolSize = 8
@@ -31,14 +32,19 @@ function initialize() {
             obstacleScript.config = script.config;
         }
 
-         script.pool.push(obstacle);
+        script.pool.push(obstacle);
     }
 
     spawnTimer = 0;
 }
 
 function updateSpawner() {
-    if (!script.config || !script.pool ||  script.pool.length === 0) {
+
+    if (script.gameManager && script.gameManager.isGameOver) {
+        return;
+    }
+
+    if (!script.config || !script.pool || script.pool.length === 0) {
         return;
     }
 
@@ -65,16 +71,16 @@ function spawnObstacle() {
 
     pos.x = laneIndex * script.config.laneDistance;
     pos.y = script.config.obstacleY;
-    pos.z = script.config.obstacleSpawnZ; 
+    pos.z = script.config.obstacleSpawnZ;
 
     transform.setLocalPosition(pos);
     obstacle.enabled = true;
 }
 
 function getNextInactiveObstacle() {
-    for (var i = 0; i <  script.pool.length; i++) {
-        var index = (nextObstacleIndex + i) %  script.pool.length;
-        var obstacle =  script.pool[index];
+    for (var i = 0; i < script.pool.length; i++) {
+        var index = (nextObstacleIndex + i) % script.pool.length;
+        var obstacle = script.pool[index];
 
         if (!obstacle.enabled) {
             nextObstacleIndex = (index + 1) % script.pool.length;

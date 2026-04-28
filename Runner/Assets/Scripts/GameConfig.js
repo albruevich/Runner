@@ -9,3 +9,5 @@
 
 //@input float collisionZDistance = 8
 //@input float laneTolerance = 0.5
+
+//@input int startHp = 3

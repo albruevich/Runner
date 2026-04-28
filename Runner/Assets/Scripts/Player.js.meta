@@ -27,6 +27,7 @@
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     config: false
+    gameManager: false
     spawner: false
     targetObject: false
   ScriptTypesHidden:
@@ -38,7 +39,8 @@
   Attachments:
     []
   DefaultScriptInputs:
-    - targetObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+    - gameManager: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      targetObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       config: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
       spawner: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
   ScriptTypes:

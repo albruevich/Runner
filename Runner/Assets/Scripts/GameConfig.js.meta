@@ -34,6 +34,7 @@
     obstacleSpeed: false
     obstacleY: false
     spawnInterval: false
+    startHp: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -51,6 +52,7 @@
       obstacleHideZ: !<float> -20.000000
       collisionZDistance: !<float> 8.000000
       laneTolerance: 0.500000
+      startHp: 3
   ScriptTypes:
     -
       {}

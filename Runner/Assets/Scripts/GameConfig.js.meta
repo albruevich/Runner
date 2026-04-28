@@ -1,0 +1,52 @@
+- !<AssetImportMetadata/0719d111-cabe-462c-a050-3dd9c4475b49>
+  ImportedAssetIds:
+    JavaScriptAsset: !<reference> c44e349d-2eb0-40dc-a767-65bd0e247b0f
+  ImporterName: JavaScriptAssetImporter
+  PrimaryAsset: !<reference> c44e349d-2eb0-40dc-a767-65bd0e247b0f
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    JavaScriptAsset: !<own> c1f089f3-1974-4ffa-9403-6d0b781b7e5d
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<ScriptAssetData/c1f089f3-1974-4ffa-9403-6d0b781b7e5d>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: a2fb2ca2-67d2-4d91-a51b-7459d6903a60
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    laneDistance: false
+    obstacleHideZ: false
+    obstacleSpawnZ: false
+    obstacleSpeed: false
+    obstacleY: false
+    spawnInterval: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - laneDistance: !<float> 4.000000
+      spawnInterval: 1.200000
+      obstacleSpawnZ: !<float> 80.000000
+      obstacleY: !<float> 1.000000
+      obstacleSpeed: !<float> 20.000000
+      obstacleHideZ: !<float> -20.000000
+  ScriptTypes:
+    -
+      {}

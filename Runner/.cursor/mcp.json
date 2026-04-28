@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "lens-studio": {
+      "type": "http",
+      "url": "http://localhost:50040/mcp",
+      "headers": {
+        "Authorization": "Bearer tcBFneHm3X0fFE01IZzUEvajDANRe9wlSIR1XAvKcICU2vG2ZvY2wYafCFIyM3uA"
+      }
+    }
+  }
+}

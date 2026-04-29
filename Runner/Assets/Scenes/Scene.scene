@@ -444,7 +444,7 @@
       startHp: 3
       startSpeed: !<float> 60.000000
       speedIncreasePerSecond: 1.500000
-      maxSpeed: !<float> 220.000000
+      maxSpeed: !<float> 300.000000
   ScriptTypes:
     "":
       {}

@@ -25,10 +25,12 @@
 
 Рекомендується клонувати репозиторій замість завантаження ZIP-архіву.
 
+```bash
 git clone <repo-url>
 cd <project-folder>
 git lfs install
 git lfs pull
+```
 
 Завантаження проєкту як ZIP може призвести до відсутніх або пошкоджених посилань на ресурси у Lens Studio.
 

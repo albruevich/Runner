@@ -26,8 +26,8 @@
 Рекомендується клонувати репозиторій замість завантаження ZIP-архіву.
 
 ```bash
-git clone <repo-url>
-cd <project-folder>
+git clone https://github.com/albruevich/Runner.git
+cd Runner
 git lfs install
 git lfs pull
 ```

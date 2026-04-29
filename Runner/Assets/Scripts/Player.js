@@ -7,6 +7,7 @@
 //@input Component.ScriptComponent prizeSpawner
 //@input SceneObject shineImage
 //@input Component.Image shineImageComponent
+//@input Component.ScriptComponent audioManager
 
 var currentLane = 0; // -1 = left, 0 = center, 1 = right
 
@@ -90,12 +91,16 @@ function jump() {
         script.gameManager.startGame();
     }
 
-    if (script.gameManager && (script.gameManager.isGameOver || script.gameManager.isHit || script.gameManager.isStartPause)) {
+    if (script.gameManager && script.gameManager.isGameOver) {
 
         if (script.gameManager.restartGame) {
             script.gameManager.restartGame();
         }
 
+        return;
+    }
+
+    if (script.gameManager && (script.gameManager.isHit || script.gameManager.isStartPause)) {
         return;
     }
 
@@ -112,7 +117,12 @@ function jump() {
 
 function updatePlayer() {
 
-    if (script.gameManager && (script.gameManager.isGameOver || script.gameManager.isStartPause)) {
+    if (script.gameManager && script.gameManager.isGameOver) {
+        resetJumpState();
+        return;
+    }
+
+    if (script.gameManager && script.gameManager.isStartPause) {
         return;
     }
 
@@ -256,6 +266,9 @@ function onCollectPrize(prize) {
     if (script.gameManager && script.gameManager.addScore) {
         script.gameManager.addScore(1);
         playShineEffect();
+        if (script.audioManager && script.audioManager.playMusic) {
+            script.audioManager.playCollect();
+        }
     }
 }
 
@@ -269,6 +282,10 @@ function onHitObstacle(obstacle) {
 
     if (script.gameManager) {
         script.gameManager.takeDamage();
+    }
+
+    if (script.audioManager && script.audioManager.playMusic) {
+        script.audioManager.playHit();
     }
 }
 
@@ -316,6 +333,21 @@ function setShineAlpha(alpha) {
     var color = script.shineImageComponent.mainPass.baseColor;
     color.a = alpha;
     script.shineImageComponent.mainPass.baseColor = color;
+}
+
+function resetJumpState() {
+    isJumping = false;
+    isFalling = false;
+    isHanging = false;
+    jumpProgress = 0;
+    hangTimer = 0;
+
+    if (script.targetObject) {
+        var transform = script.targetObject.getTransform();
+        var pos = transform.getLocalPosition();
+        pos.y = baseY;
+        transform.setLocalPosition(pos);
+    }
 }
 
 initialize();

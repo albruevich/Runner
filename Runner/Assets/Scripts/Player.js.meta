@@ -26,6 +26,7 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
+    audioManager: false
     config: false
     gameManager: false
     obstacleSpawner: false
@@ -49,6 +50,7 @@
       prizeSpawner: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
       shineImage: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       shineImageComponent: !<reference.Image> 00000000-0000-0000-0000-000000000000
+      audioManager: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
       {}

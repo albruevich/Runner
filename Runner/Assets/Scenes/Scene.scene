@@ -234,7 +234,7 @@
   RenderOrder: 0
   StretchMode: Stretch
   VerticalAlignment: Center
-  HorizontalAlignment: Right
+  HorizontalAlignment: Left
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
@@ -396,14 +396,12 @@
   Enabled: true
   ScriptAsset: !<reference> c44e349d-2eb0-40dc-a767-65bd0e247b0f
   ScriptInputsDefault:
-    spawnInterval: true
+    obstacleSpawnInterval: true
     obstacleGroundY: true
     obstacleUpperY: true
     upperObstacleChance: true
-    prizePoolSize: true
-    prizeSpawnInterval: true
-    prizeGroundY: true
     prizeJumpY: true
+    spawnCriticalDistance: true
     collisionZDistance: true
     laneTolerance: true
     startHp: true
@@ -414,19 +412,18 @@
   ScriptInputs:
     "":
       laneDistance: !<float> 15.000000
-      spawnInterval: 1.200000
+      obstacleSpawnInterval: 1.200000
       obstacleSpawnZ: !<float> -350.000000
       obstacleGroundY: !<float> 5.000000
       obstacleUpperY: !<float> 28.000000
       upperObstacleChance: 0.350000
       obstacleHideZ: !<float> 40.000000
-      prizePoolSize: 8
-      prizeSpawnInterval: !<float> 1.000000
-      prizeGroundY: !<float> 6.000000
+      prizePoolSize: 15
+      prizeSpawnInterval: 0.700000
+      prizeGroundY: !<float> 8.000000
       prizeJumpY: !<float> 28.000000
       jumpPrizeChance: 0.450000
-      prizeObstacleCheckZDistance: !<float> 80.000000
-      prizeObstacleHeightDistance: !<float> 10.000000
+      spawnCriticalDistance: !<float> 20.000000
       collisionZDistance: !<float> 8.000000
       laneTolerance: 0.500000
       startHp: 3
@@ -471,6 +468,7 @@
       gameManager: !<reference.ScriptComponent> 9db2195e-3371-497d-93a0-65d4cdb959d4
       config: !<reference.ScriptComponent> 30c255f4-8d61-4450-b454-76896d2fa707
       obstaclePrefab: !<reference.ObjectPrefab> 4a5c0ff3-27b9-4b3b-b824-27ac0d832fd0
+      prizeSpawner: !<reference.ScriptComponent> e5b305a0-3dd6-4939-a3f4-b67bd73a6505
       poolSize: 10
   ScriptTypes:
     "":
@@ -563,15 +561,15 @@
   RawMode: true
   ForceBasic: true
   Anchor:
-    left: 0.354485
-    bottom: 0.933199
-    right: 0.936341
+    left: -0.974733
+    bottom: 0.931223
+    right: -0.392877
     top: 0.999999
   Offset:
     left: 0.000000
-    bottom: -0.000021
+    bottom: -0.000005
     right: 0.000000
-    top: -2.103021
+    top: -3.660006
 - !<SceneObject/6f67a2d9-f429-4a6d-b1d7-ab951342e6b2>
   PrefabRemaps:
     []
@@ -670,15 +668,15 @@
   RawMode: true
   ForceBasic: true
   Anchor:
-    left: -0.954503
-    bottom: 0.933284
-    right: -0.090765
+    left: 0.114162
+    bottom: 0.931678
+    right: 0.977900
     top: 1.000000
   Offset:
     left: 0.000000
-    bottom: 0.000017
+    bottom: 0.000013
     right: 0.000000
-    top: -2.221983
+    top: -3.491987
 - !<ScreenRegionComponent/93841094-28e1-4bec-ad25-7525951bfcbd>
   PrefabRemaps:
     []
@@ -768,7 +766,7 @@
   RenderOrder: 0
   StretchMode: Stretch
   VerticalAlignment: Center
-  HorizontalAlignment: Left
+  HorizontalAlignment: Right
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000

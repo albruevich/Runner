@@ -33,6 +33,7 @@
     maxSpeed: false
     obstacleGroundY: false
     obstacleHideZ: false
+    obstacleSpawnInterval: false
     obstacleSpawnZ: false
     obstacleUpperY: false
     prizeGroundY: false
@@ -40,7 +41,6 @@
     prizePoolSize: false
     prizeSpawnInterval: false
     spawnCriticalDistance: false
-    spawnInterval: false
     speedIncreasePerSecond: false
     startHp: false
     startSpeed: false
@@ -55,7 +55,7 @@
     []
   DefaultScriptInputs:
     - laneDistance: !<float> 4.000000
-      spawnInterval: 1.200000
+      obstacleSpawnInterval: 1.200000
       obstacleSpawnZ: !<float> 80.000000
       obstacleGroundY: !<float> 5.000000
       obstacleUpperY: !<float> 28.000000

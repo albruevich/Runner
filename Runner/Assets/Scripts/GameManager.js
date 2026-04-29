@@ -126,7 +126,7 @@ function updateSpawning() {
             script.obstacleSpawner.spawnObstacle();
         }
 
-        obstacleSpawnTimer = script.getSpawnInterval(script.config.spawnInterval);
+        obstacleSpawnTimer = script.getSpawnInterval(script.config.obstacleSpawnInterval);
     }
 
     if (prizeSpawnTimer <= 0) {

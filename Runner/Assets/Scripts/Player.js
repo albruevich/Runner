@@ -28,6 +28,8 @@ var touchStartX = 0;
 var touchStartY = 0;
 var swipeThreshold = 0.08;
 
+var pendingHitObstacle = null;
+
 function initialize() {
     if (!script.targetObject) {
         print("Target is not assigned.");
@@ -134,6 +136,12 @@ function updatePlayer() {
     checkObstacleCollisions(pos);
     checkPrizeCollisions(pos);
     transform.setLocalPosition(pos);
+
+    if (pendingHitObstacle && script.gameManager && !script.gameManager.isHit) {
+
+        pendingHitObstacle.enabled = false;
+        pendingHitObstacle = null;
+    }
 }
 
 function lerp(a, b, t) {
@@ -219,7 +227,11 @@ function onCollectPrize(prize) {
 
 function onHitObstacle(obstacle) {
 
-    obstacle.enabled = false;
+    if (pendingHitObstacle) {
+        return;
+    }
+
+    pendingHitObstacle = obstacle;
 
     if (script.gameManager) {
         script.gameManager.takeDamage();

@@ -18,15 +18,24 @@ var hitTimer = 0;
 var obstacleSpawnTimer = 0;
 var prizeSpawnTimer = 0;
 
+var config;
+var obstacleSpawner;
+var prizeSpawner;
+var audioManager;
+var scoreScaleEffect;
+var hearts;
+
 function initialize() {
 
-    hp = script.config.startHp;
+    cacheReferences();
+
+    hp = getMaxHp();
     score = 0;
 
     script.isGameOver = false;
     script.isStartPause = true;
     script.isHit = false;
-    script.currentSpeed = script.config.startSpeed;
+    script.currentSpeed = config.startSpeed;
 
     obstacleSpawnTimer = 0;
     prizeSpawnTimer = 0;
@@ -38,6 +47,19 @@ function initialize() {
     }
 
     refreshUI();
+}
+
+function cacheReferences() {
+    config = script.config;
+    obstacleSpawner = script.obstacleSpawner;
+    prizeSpawner = script.prizeSpawner;
+    audioManager = script.audioManager;
+    scoreScaleEffect = script.scoreScaleEffect;
+    hearts = script.hearts;
+}
+
+function getMaxHp() {
+    return hearts ? hearts.length : 0;
 }
 
 script.takeDamage = function () {
@@ -60,28 +82,20 @@ script.takeDamage = function () {
 
 script.restartGame = function () {
 
-    hp = script.config.startHp;
+    hp = getMaxHp();
     score = 0;
 
     script.isGameOver = false;
     script.isHit = false;
     hitTimer = 0;
-    script.currentSpeed = script.config.startSpeed;
+    script.currentSpeed = config.startSpeed;
 
     obstacleSpawnTimer = 0;
     prizeSpawnTimer = 0;
 
-    if (script.obstacleSpawner && script.obstacleSpawner.restartSpawner) {
-        script.obstacleSpawner.restartSpawner();
-    }
-
-    if (script.prizeSpawner && script.prizeSpawner.restartSpawner) {
-        script.prizeSpawner.restartSpawner();
-    }
-
-    if (script.audioManager && script.audioManager.playMusic) {
-        script.audioManager.playMusic();
-    }
+    obstacleSpawner.restartSpawner();
+    prizeSpawner.restartSpawner();
+    audioManager.playMusic();
 
     refreshUI();
 };
@@ -89,9 +103,7 @@ script.restartGame = function () {
 script.addScore = function (amount) {
     score += amount;
 
-    if (script.scoreScaleEffect && script.scoreScaleEffect.play) {
-        script.scoreScaleEffect.play();
-    }
+    scoreScaleEffect.play();
 
     refreshUI();
 };
@@ -119,10 +131,10 @@ function updateGameManager() {
 
 function updateSpeed() {
 
-    script.currentSpeed += script.config.speedIncreasePerSecond * getDeltaTime();
+    script.currentSpeed += config.speedIncreasePerSecond * getDeltaTime();
 
-    if (script.currentSpeed > script.config.maxSpeed) {
-        script.currentSpeed = script.config.maxSpeed;
+    if (script.currentSpeed > config.maxSpeed) {
+        script.currentSpeed = config.maxSpeed;
     }
 }
 
@@ -134,21 +146,13 @@ function updateSpawning() {
     prizeSpawnTimer -= dt;
 
     if (obstacleSpawnTimer <= 0) {
-
-        if (script.obstacleSpawner && script.obstacleSpawner.spawnObstacle) {
-            script.obstacleSpawner.spawnObstacle();
-        }
-
-        obstacleSpawnTimer = script.getSpawnInterval(script.config.obstacleSpawnInterval);
+        obstacleSpawner.spawnObstacle();
+        obstacleSpawnTimer = script.getSpawnInterval(config.obstacleSpawnInterval);
     }
 
     if (prizeSpawnTimer <= 0) {
-
-        if (script.prizeSpawner && script.prizeSpawner.spawnPrize) {
-            script.prizeSpawner.spawnPrize();
-        }
-
-        prizeSpawnTimer = script.getSpawnInterval(script.config.prizeSpawnInterval);
+        prizeSpawner.spawnPrize();
+        prizeSpawnTimer = script.getSpawnInterval(config.prizeSpawnInterval);
     }
 }
 
@@ -163,9 +167,7 @@ function gameOver() {
         saveHighScore();
     }
 
-    if (script.audioManager && script.audioManager.stopMusic) {
-        script.audioManager.stopMusic();
-    }
+    audioManager.stopMusic();
 
     refreshUI();
 }
@@ -212,13 +214,13 @@ function refreshUI() {
 
 function updateHearts() {
 
-    if (!script.hearts) {
+    if (!hearts) {
         return;
     }
 
-    for (var i = 0; i < script.hearts.length; i++) {
+    for (var i = 0; i < hearts.length; i++) {
 
-        var heart = script.hearts[i];
+        var heart = hearts[i];
 
         if (heart) {
             heart.enabled = i < hp;
@@ -237,7 +239,7 @@ function padScore(value) {
 }
 
 script.getSpawnInterval = function (baseInterval) {
-    var speedRatio = script.currentSpeed / script.config.startSpeed;
+    var speedRatio = script.currentSpeed / config.startSpeed;
     return baseInterval / speedRatio;
 };
 
@@ -253,9 +255,7 @@ script.startGame = function () {
         script.playButton.enabled = false;
     }
 
-    if (script.audioManager && script.audioManager.playMusic) {
-        script.audioManager.playMusic();
-    }
+    audioManager.playMusic();
 };
 
 script.resetHiScore = resetHiScore;

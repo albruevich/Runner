@@ -3,32 +3,61 @@
 //@input Component.ScriptComponent gameManager
 //@input Component.ScriptComponent config
 
-function updatePrize() {
+var gameManager;
+var config;
+var sceneObject;
+var transform;
 
-    if (script.gameManager && (script.gameManager.isGameOver || script.gameManager.isHit || script.gameManager.isStartPause)) {
+function initialize() {
+    cacheReferences();
+
+    if (!config) {
+        print("Prize config is not assigned.");
         return;
     }
 
-    var obj = script.getSceneObject();
+    if (!sceneObject) {
+        print("Prize sceneObject is missing.");
+        return;
+    }
 
-    if (!obj.enabled) {
+    transform = sceneObject.getTransform();
+}
+
+function cacheReferences() {
+    gameManager = script.gameManager;
+    config = script.config;
+    sceneObject = script.getSceneObject();
+}
+
+function updatePrize() {
+
+    if (!sceneObject || !transform || !config) {
+        return;
+    }
+
+    if (gameManager && (gameManager.isGameOver || gameManager.isHit || gameManager.isStartPause)) {
+        return;
+    }
+
+    if (!sceneObject.enabled) {
         return;
     }
 
     var dt = getDeltaTime();
-
-    var transform = obj.getTransform();
     var pos = transform.getLocalPosition();
 
-    var speed = script.gameManager ? script.gameManager.currentSpeed : script.config.startSpeed;
+    var speed = gameManager ? gameManager.currentSpeed : config.startSpeed;
     pos.z += speed * dt;
 
-    if (pos.z > script.config.obstacleHideZ) {
-        obj.enabled = false;
+    if (pos.z > config.obstacleHideZ) {
+        sceneObject.enabled = false;
         return;
     }
 
     transform.setLocalPosition(pos);
 }
+
+initialize();
 
 script.createEvent("UpdateEvent").bind(updatePrize);

@@ -6,38 +6,58 @@
 //@input Component.ScriptComponent prizeSpawner
 //@input int poolSize = 10
 
+var gameManager;
+var config;
+var obstaclePrefab;
+var prizeSpawner;
+
+var pool = [];
 var nextObstacleIndex = 0;
 
 function initialize() {
+    cacheReferences();
 
-    if (!script.config) {
+    if (!config) {
         print("ObstacleSpawner: config is not assigned.");
         return;
     }
 
-    if (!script.obstaclePrefab) {
+    if (!obstaclePrefab) {
         print("ObstacleSpawner: obstaclePrefab is not assigned.");
         return;
     }
 
-    script.pool = [];
+    createPool();
+    restartSpawner();
+}
+
+function cacheReferences() {
+    gameManager = script.gameManager;
+    config = script.config;
+    obstaclePrefab = script.obstaclePrefab;
+    prizeSpawner = script.prizeSpawner;
+}
+
+function createPool() {
+
+    pool = [];
+    script.pool = pool;
 
     for (var i = 0; i < script.poolSize; i++) {
-        var obstacle = script.obstaclePrefab.instantiate(null);
+        var obstacle = obstaclePrefab.instantiate(null);
 
         obstacle.name = "Obstacle_" + i;
         obstacle.enabled = false;
 
         var obstacleScript = obstacle.getComponent("Component.ScriptComponent");
+
         if (obstacleScript) {
-            obstacleScript.config = script.config;
-            obstacleScript.gameManager = script.gameManager;
+            obstacleScript.config = config;
+            obstacleScript.gameManager = gameManager;
         }
 
-        script.pool.push(obstacle);
+        pool.push(obstacle);
     }
-
-    restartSpawner();
 }
 
 function spawnObstacle() {
@@ -68,15 +88,15 @@ function spawnObstacle() {
 function findFreeObstaclePosition() {
 
     var lanes = [-1, 0, 1];
-    var heights = [script.config.obstacleGroundY, script.config.obstacleUpperY];
-    var z = script.config.obstacleSpawnZ;
+    var heights = [config.obstacleGroundY, config.obstacleUpperY];
+    var z = config.obstacleSpawnZ;
 
     var candidates = [];
 
     for (var i = 0; i < lanes.length; i++) {
         for (var j = 0; j < heights.length; j++) {
             candidates.push({
-                x: lanes[i] * script.config.laneDistance,
+                x: lanes[i] * config.laneDistance,
                 y: heights[j],
                 z: z
             });
@@ -98,12 +118,12 @@ function findFreeObstaclePosition() {
 
 function isPositionFree(x, y, z) {
 
-    if (!script.prizeSpawner || !script.prizeSpawner.pool) {
+    if (!prizeSpawner || !prizeSpawner.pool) {
         return true;
     }
 
     var targetPos = new vec3(x, y, z);
-    var prizes = script.prizeSpawner.pool;
+    var prizes = prizeSpawner.pool;
 
     for (var i = 0; i < prizes.length; i++) {
 
@@ -116,7 +136,7 @@ function isPositionFree(x, y, z) {
         var prizePos = prize.getTransform().getLocalPosition();
         var distance = prizePos.distance(targetPos);
 
-        if (distance < script.config.spawnCriticalDistance) {
+        if (distance < config.spawnCriticalDistance) {
             return false;
         }
     }
@@ -137,12 +157,12 @@ function shuffle(array) {
 
 function getNextInactiveObstacle() {
 
-    for (var i = 0; i < script.pool.length; i++) {
-        var index = (nextObstacleIndex + i) % script.pool.length;
-        var obstacle = script.pool[index];
+    for (var i = 0; i < pool.length; i++) {
+        var index = (nextObstacleIndex + i) % pool.length;
+        var obstacle = pool[index];
 
         if (!obstacle.enabled) {
-            nextObstacleIndex = (index + 1) % script.pool.length;
+            nextObstacleIndex = (index + 1) % pool.length;
             return obstacle;
         }
     }
@@ -154,12 +174,8 @@ function restartSpawner() {
 
     nextObstacleIndex = 0;
 
-    if (!script.pool) {
-        return;
-    }
-
-    for (var i = 0; i < script.pool.length; i++) {
-        script.pool[i].enabled = false;
+    for (var i = 0; i < pool.length; i++) {
+        pool[i].enabled = false;
     }
 }
 

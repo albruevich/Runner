@@ -18,7 +18,6 @@
 //@input float collisionZDistance = 8
 //@input float laneTolerance = 0.5
 
-//@input int startHp = 3
 //@input float startSpeed = 60
 //@input float speedIncreasePerSecond = 1.2
 //@input float maxSpeed = 300

@@ -42,7 +42,6 @@
     prizeSpawnInterval: false
     spawnCriticalDistance: false
     speedIncreasePerSecond: false
-    startHp: false
     startSpeed: false
     upperObstacleChance: false
   ScriptTypesHidden:
@@ -69,7 +68,6 @@
       spawnCriticalDistance: !<float> 20.000000
       collisionZDistance: !<float> 8.000000
       laneTolerance: 0.500000
-      startHp: 3
       startSpeed: !<float> 60.000000
       speedIncreasePerSecond: 1.500000
       maxSpeed: !<float> 140.000000

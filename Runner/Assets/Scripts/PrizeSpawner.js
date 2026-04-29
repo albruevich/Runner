@@ -5,15 +5,46 @@
 //@input Component.ScriptComponent obstacleSpawner
 //@input Asset.ObjectPrefab prizePrefab
 
+var gameManager;
+var config;
+var obstacleSpawner;
+var prizePrefab;
+
+var pool = [];
 var nextPrizeIndex = 0;
 
 function initialize() {
+    cacheReferences();
 
-    script.pool = [];
+    if (!config) {
+        print("PrizeSpawner config is not assigned.");
+        return;
+    }
 
-    for (var i = 0; i < script.config.prizePoolSize; i++) {
+    if (!prizePrefab) {
+        print("PrizeSpawner prefab is not assigned.");
+        return;
+    }
 
-        var prize = script.prizePrefab.instantiate(null);
+    createPool();
+    restartSpawner();
+}
+
+function cacheReferences() {
+    gameManager = script.gameManager;
+    config = script.config;
+    obstacleSpawner = script.obstacleSpawner;
+    prizePrefab = script.prizePrefab;
+}
+
+function createPool() {
+
+    pool = [];
+    script.pool = pool;
+
+    for (var i = 0; i < config.prizePoolSize; i++) {
+
+        var prize = prizePrefab.instantiate(null);
 
         prize.name = "Prize_" + i;
         prize.enabled = false;
@@ -21,14 +52,12 @@ function initialize() {
         var prizeScript = prize.getComponent("Component.ScriptComponent");
 
         if (prizeScript) {
-            prizeScript.config = script.config;
-            prizeScript.gameManager = script.gameManager;
+            prizeScript.config = config;
+            prizeScript.gameManager = gameManager;
         }
 
-        script.pool.push(prize);
+        pool.push(prize);
     }
-
-    restartSpawner();
 }
 
 function spawnPrize() {
@@ -59,15 +88,16 @@ function spawnPrize() {
 function findFreePrizePosition() {
 
     var lanes = [-1, 0, 1];
-    var heights = [script.config.prizeGroundY, script.config.prizeJumpY];
-    var z = script.config.obstacleSpawnZ;
+    var heights = [config.prizeGroundY, config.prizeJumpY];
+    var z = config.obstacleSpawnZ;
 
     var candidates = [];
 
     for (var i = 0; i < lanes.length; i++) {
         for (var j = 0; j < heights.length; j++) {
+
             candidates.push({
-                x: lanes[i] * script.config.laneDistance,
+                x: lanes[i] * config.laneDistance,
                 y: heights[j],
                 z: z
             });
@@ -89,12 +119,12 @@ function findFreePrizePosition() {
 
 function isPositionFree(x, y, z) {
 
-    if (!script.obstacleSpawner || !script.obstacleSpawner.pool) {
+    if (!obstacleSpawner || !obstacleSpawner.pool) {
         return true;
     }
 
     var targetPos = new vec3(x, y, z);
-    var obstacles = script.obstacleSpawner.pool;
+    var obstacles = obstacleSpawner.pool;
 
     for (var i = 0; i < obstacles.length; i++) {
 
@@ -107,7 +137,7 @@ function isPositionFree(x, y, z) {
         var obstaclePos = obstacle.getTransform().getLocalPosition();
         var distance = obstaclePos.distance(targetPos);
 
-        if (distance < script.config.spawnCriticalDistance) {
+        if (distance < config.spawnCriticalDistance) {
             return false;
         }
     }
@@ -118,6 +148,7 @@ function isPositionFree(x, y, z) {
 function shuffle(array) {
 
     for (var i = array.length - 1; i > 0; i--) {
+
         var j = Math.floor(Math.random() * (i + 1));
 
         var temp = array[i];
@@ -128,13 +159,13 @@ function shuffle(array) {
 
 function getNextInactivePrize() {
 
-    for (var i = 0; i < script.pool.length; i++) {
+    for (var i = 0; i < pool.length; i++) {
 
-        var index = (nextPrizeIndex + i) % script.pool.length;
-        var prize = script.pool[index];
+        var index = (nextPrizeIndex + i) % pool.length;
+        var prize = pool[index];
 
         if (!prize.enabled) {
-            nextPrizeIndex = (index + 1) % script.pool.length;
+            nextPrizeIndex = (index + 1) % pool.length;
             return prize;
         }
     }
@@ -146,12 +177,8 @@ function restartSpawner() {
 
     nextPrizeIndex = 0;
 
-    if (!script.pool) {
-        return;
-    }
-
-    for (var i = 0; i < script.pool.length; i++) {
-        script.pool[i].enabled = false;
+    for (var i = 0; i < pool.length; i++) {
+        pool[i].enabled = false;
     }
 }
 

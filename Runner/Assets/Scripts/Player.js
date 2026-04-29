@@ -9,6 +9,16 @@
 //@input Component.Image shineImageComponent
 //@input Component.ScriptComponent audioManager
 
+var gameManager;
+var targetObject;
+var targetTransform;
+var config;
+var obstacleSpawner;
+var prizeSpawner;
+var shineImage;
+var shineImageComponent;
+var audioManager;
+
 var currentLane = 0; // -1 = left, 0 = center, 1 = right
 
 var moveSpeed = 20;
@@ -38,25 +48,39 @@ var shineDuration = 0.25;
 var shineStartAlpha = 1.0;
 
 function initialize() {
-    if (!script.targetObject) {
+    cacheReferences();
+
+    if (!targetObject) {
         print("Target is not assigned.");
         return;
     }
 
-    if (!script.config) {
+    if (!config) {
         print("Config is not assigned.");
         return;
     }
 
-    if (script.shineImageComponent) {
-        shineStartAlpha = script.shineImageComponent.mainPass.baseColor.a;
+    targetTransform = targetObject.getTransform();
+    baseY = targetTransform.getLocalPosition().y;
+
+    if (shineImageComponent) {
+        shineStartAlpha = shineImageComponent.mainPass.baseColor.a;
     }
 
-    if (script.shineImage) {
-        script.shineImage.enabled = false;
+    if (shineImage) {
+        shineImage.enabled = false;
     }
+}
 
-    baseY = script.targetObject.getTransform().getLocalPosition().y;
+function cacheReferences() {
+    gameManager = script.gameManager;
+    targetObject = script.targetObject;
+    config = script.config;
+    obstacleSpawner = script.obstacleSpawner;
+    prizeSpawner = script.prizeSpawner;
+    shineImage = script.shineImage;
+    shineImageComponent = script.shineImageComponent;
+    audioManager = script.audioManager;
 }
 
 function moveLeft() {
@@ -79,8 +103,6 @@ function moveRight() {
 
 function jump() {
 
-    var gameManager = script.gameManager;
-
     if (!gameManager) {
         return;
     }
@@ -88,11 +110,7 @@ function jump() {
     gameManager.startGame();
 
     if (gameManager.isGameOver) {
-
-        if (gameManager.restartGame) {
-            gameManager.restartGame();
-        }
-
+        gameManager.restartGame();
         return;
     }
 
@@ -109,8 +127,6 @@ function jump() {
 
 function canControlPlayer() {
 
-    var gameManager = script.gameManager;
-
     if (!gameManager) {
         return false;
     }
@@ -124,9 +140,7 @@ function canControlPlayer() {
 
 function updatePlayer() {
 
-    var gameManager = script.gameManager;
-
-    if (!gameManager) {
+    if (!gameManager || !targetTransform || !config) {
         return;
     }
 
@@ -135,17 +149,32 @@ function updatePlayer() {
         return;
     }
 
-    if (!script.targetObject || !script.config || gameManager.isStartPause) {
+    if (gameManager.isStartPause) {
         return;
     }
 
     var dt = getDeltaTime();
     var speedMultiplier = getGameSpeedMultiplier();
-    var transform = script.targetObject.getTransform();
-    var pos = transform.getLocalPosition();
+    var pos = targetTransform.getLocalPosition();
 
-    var targetX = currentLane * script.config.laneDistance;
+    updateMovement(pos, dt, speedMultiplier);
+    updateJump(pos, dt, speedMultiplier);
+
+    checkObstacleCollisions(pos);
+    checkPrizeCollisions(pos);
+
+    targetTransform.setLocalPosition(pos);
+
+    updatePendingHitObstacle();
+    updateShineEffect(dt);
+}
+
+function updateMovement(pos, dt, speedMultiplier) {
+    var targetX = currentLane * config.laneDistance;
     pos.x = lerp(pos.x, targetX, moveSpeed * speedMultiplier * dt);
+}
+
+function updateJump(pos, dt, speedMultiplier) {
 
     if (isJumping) {
 
@@ -167,6 +196,7 @@ function updatePlayer() {
                 isHanging = false;
                 isFalling = true;
             }
+
         } else if (isFalling) {
 
             jumpProgress -= dt * jumpDownSpeed * speedMultiplier;
@@ -180,21 +210,18 @@ function updatePlayer() {
         }
 
         pos.y = baseY + smoothStep(jumpProgress) * jumpHeight;
+
     } else {
         pos.y = baseY;
     }
+}
 
-    checkObstacleCollisions(pos);
-    checkPrizeCollisions(pos);
-    transform.setLocalPosition(pos);
+function updatePendingHitObstacle() {
 
     if (pendingHitObstacle && !gameManager.isHit) {
-
         pendingHitObstacle.enabled = false;
         pendingHitObstacle = null;
     }
-
-    updateShineEffect(dt);
 }
 
 function lerp(a, b, t) {
@@ -209,11 +236,15 @@ function smoothStep(t) {
 
 function checkObstacleCollisions(playerPos) {
 
-    if (!script.obstacleSpawner || !script.obstacleSpawner.pool) {
+    if (!obstacleSpawner) {
         return;
     }
 
-    var obstacles = script.obstacleSpawner.pool;
+    var obstacles = obstacleSpawner.pool;
+
+    if (!obstacles) {
+        return;
+    }
 
     for (var i = 0; i < obstacles.length; i++) {
         var obstacle = obstacles[i];
@@ -226,10 +257,10 @@ function checkObstacleCollisions(playerPos) {
 
         var dz = Math.abs(playerPos.z - obstaclePos.z);
 
-        var sameLane = Math.abs(playerPos.x - obstaclePos.x) < script.config.laneTolerance;
-        var closeEnough = dz < script.config.collisionZDistance;
+        var sameLane = Math.abs(playerPos.x - obstaclePos.x) < config.laneTolerance;
+        var closeEnough = dz < config.collisionZDistance;
 
-        var isUpperObstacle = obstaclePos.y > script.config.obstacleGroundY + 1;
+        var isUpperObstacle = obstaclePos.y > config.obstacleGroundY + 1;
         var canHitByHeight = isUpperObstacle ? isJumping : !isJumping;
 
         if (sameLane && closeEnough && canHitByHeight) {
@@ -240,11 +271,15 @@ function checkObstacleCollisions(playerPos) {
 
 function checkPrizeCollisions(playerPos) {
 
-    if (!script.prizeSpawner || !script.prizeSpawner.pool) {
+    if (!prizeSpawner) {
         return;
     }
 
-    var prizes = script.prizeSpawner.pool;
+    var prizes = prizeSpawner.pool;
+
+    if (!prizes) {
+        return;
+    }
 
     for (var i = 0; i < prizes.length; i++) {
         var prize = prizes[i];
@@ -257,10 +292,10 @@ function checkPrizeCollisions(playerPos) {
 
         var dz = Math.abs(playerPos.z - prizePos.z);
 
-        var sameLane = Math.abs(playerPos.x - prizePos.x) < script.config.laneTolerance;
-        var closeEnough = dz < script.config.collisionZDistance;
+        var sameLane = Math.abs(playerPos.x - prizePos.x) < config.laneTolerance;
+        var closeEnough = dz < config.collisionZDistance;
 
-        var isJumpPrize = prizePos.y > script.config.prizeGroundY + 1;
+        var isJumpPrize = prizePos.y > config.prizeGroundY + 1;
         var canCollectByHeight = isJumpPrize ? isJumping : !isJumping;
 
         if (sameLane && closeEnough && canCollectByHeight) {
@@ -272,12 +307,11 @@ function checkPrizeCollisions(playerPos) {
 function onCollectPrize(prize) {
     prize.enabled = false;
 
-    if (script.gameManager && script.gameManager.addScore) {
-        script.gameManager.addScore(1);
-        playShineEffect();
-        if (script.audioManager) {
-            script.audioManager.playCollect();
-        }
+    gameManager.addScore(1);
+    playShineEffect();
+
+    if (audioManager) {
+        audioManager.playCollect();
     }
 }
 
@@ -289,29 +323,23 @@ function onHitObstacle(obstacle) {
 
     pendingHitObstacle = obstacle;
 
-    if (script.gameManager) {
-        script.gameManager.takeDamage();
-    }
+    gameManager.takeDamage();
 
-    if (script.audioManager) {
-        script.audioManager.playHit();
+    if (audioManager) {
+        audioManager.playHit();
     }
 }
 
 function getGameSpeedMultiplier() {
-    if (!script.gameManager || !script.config || !script.config.startSpeed) {
-        return 1;
-    }
-
-    return script.gameManager.currentSpeed / script.config.startSpeed;
+    return gameManager.currentSpeed / config.startSpeed;
 }
 
 function playShineEffect() {
 
     shineTimer = shineDuration;
 
-    if (script.shineImage) {
-        script.shineImage.enabled = true;
+    if (shineImage) {
+        shineImage.enabled = true;
     }
 
     setShineAlpha(shineStartAlpha);
@@ -319,7 +347,7 @@ function playShineEffect() {
 
 function updateShineEffect(dt) {
 
-    if (!script.shineImage || shineTimer <= 0) {
+    if (!shineImage || shineTimer <= 0) {
         return;
     }
 
@@ -329,19 +357,19 @@ function updateShineEffect(dt) {
     setShineAlpha(alpha);
 
     if (shineTimer <= 0) {
-        script.shineImage.enabled = false;
+        shineImage.enabled = false;
     }
 }
 
 function setShineAlpha(alpha) {
 
-    if (!script.shineImageComponent) {
+    if (!shineImageComponent) {
         return;
     }
 
-    var color = script.shineImageComponent.mainPass.baseColor;
+    var color = shineImageComponent.mainPass.baseColor;
     color.a = alpha;
-    script.shineImageComponent.mainPass.baseColor = color;
+    shineImageComponent.mainPass.baseColor = color;
 }
 
 function resetJumpState() {
@@ -351,12 +379,9 @@ function resetJumpState() {
     jumpProgress = 0;
     hangTimer = 0;
 
-    if (script.targetObject) {
-        var transform = script.targetObject.getTransform();
-        var pos = transform.getLocalPosition();
-        pos.y = baseY;
-        transform.setLocalPosition(pos);
-    }
+    var pos = targetTransform.getLocalPosition();
+    pos.y = baseY;
+    targetTransform.setLocalPosition(pos);
 }
 
 initialize();

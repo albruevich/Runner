@@ -513,10 +513,23 @@
       AnimationAsset: !<reference> b1a436c1-2534-4b02-9d89-8d5e8f5186ff
       Name: Jump
       Weight: 1.000000
-      PlaybackSpeed: 2.500000
-      Begin: 0.066667
-      End: 2.000000
-      Offset: 0.066667
+      PlaybackSpeed: 2.000000
+      Begin: 1.000000
+      End: 9.000000
+      Offset: 2.000000
+      Reversed: false
+      Disabled: false
+      BlendMode: Default
+      ScaleMode: Multiply
+      PlaybackMode: Loop
+    - !<AnimationClip>
+      AnimationAsset: !<reference> 9aac752e-d26b-45c8-8813-e69246344b4b
+      Name: Idle
+      Weight: 1.000000
+      PlaybackSpeed: 1.500000
+      Begin: 1.000000
+      End: 11.600000
+      Offset: 1.000000
       Reversed: false
       Disabled: false
       BlendMode: Default
@@ -559,7 +572,7 @@
     []
   Name: BitmojiAnimationController
   Enabled: true
-  ScriptAsset: !<reference> 335f6db2-0620-4cec-a92a-42f9c4e1c311
+  ScriptAsset: !<reference> 78d6e680-a91f-402a-bdb4-98d903e148c3
   ScriptInputsDefault:
     bitmoji3dComponent: true
     animationPlayer: true
@@ -571,8 +584,8 @@
     "":
       bitmoji3dComponent: !<reference.ScriptComponent> 876f56ea-dd0b-4ef1-a581-f93fef35f1ac
       animationPlayer: !<reference.AnimationPlayer> 3dca2c0e-54de-46d4-a440-38d7378deb66
-      animationAsset: !<reference.AnimationAsset> b1a436c1-2534-4b02-9d89-8d5e8f5186ff
-      heavyAnimationAsset: !<reference.AnimationAsset> e67ab853-860d-4420-9daa-31f48921b628
+      animationAsset: !<reference.AnimationAsset> 9aac752e-d26b-45c8-8813-e69246344b4b
+      heavyAnimationAsset: !<reference.AnimationAsset> 197eb7f3-8b6c-423e-808f-b3c4a445ad41
   ScriptTypes:
     "":
       {}
@@ -1088,6 +1101,7 @@
   ScriptInputs:
     "":
       player: !<reference.ScriptComponent> fe72a79d-6116-4837-a29d-601bd89e2b42
+      gameManager: !<reference.ScriptComponent> 9db2195e-3371-497d-93a0-65d4cdb959d4
       animationPlayer: !<reference.AnimationPlayer> 3dca2c0e-54de-46d4-a440-38d7378deb66
   ScriptTypes:
     "":

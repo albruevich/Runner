@@ -27,6 +27,7 @@
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     animationPlayer: false
+    gameManager: false
     player: false
   ScriptTypesHidden:
     {}
@@ -38,6 +39,7 @@
     []
   DefaultScriptInputs:
     - player: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      gameManager: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
       animationPlayer: !<reference.AnimationPlayer> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -

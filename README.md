@@ -42,15 +42,6 @@ For the best gameplay preview inside Lens Studio, use:
 
 Some other preview environments (such as Idle / Face modes) may affect camera framing and are intended for AR testing rather than gameplay.
 
-## Gameplay
-
-- Move between 3 lanes
-- Jump over obstacles
-- Collect prizes to earn score
-- 3 hearts (lives)
-- Game speed increases over time
-- High score is saved locally
-
 ## Demo
 
 ![Demo](docs/demo.gif)
@@ -80,10 +71,12 @@ Some other preview environments (such as Idle / Face modes) may affect camera fr
 
 ## Features
 
+- 3-lane endless runner gameplay
+- Obstacles, jumping, and collectibles
+- Progressive speed increase
+- High score saving
+- Swipe + keyboard controls
 - Object pooling
-- Dynamic difficulty scaling
-- Score system
-- High score save system
-- UI effects
-- Sound effects
+- UI effects and sound feedback
 - Character animations
+- Quick restart without leaving the lens

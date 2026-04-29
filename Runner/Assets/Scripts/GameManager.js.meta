@@ -26,6 +26,7 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
+    audioManager: false
     config: false
     gameOverText: false
     hpText: false
@@ -47,6 +48,7 @@
       hpText: !<reference.Text> 00000000-0000-0000-0000-000000000000
       scoreText: !<reference.Text> 00000000-0000-0000-0000-000000000000
       gameOverText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      audioManager: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
       {}

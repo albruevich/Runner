@@ -6,6 +6,7 @@
 //@input Component.Text hpText
 //@input Component.Text scoreText
 //@input Component.Text gameOverText
+//@input Component.ScriptComponent audioManager
 
 var hp = 0;
 var score = 0;
@@ -73,6 +74,10 @@ script.restartGame = function () {
 
     if (script.prizeSpawner && script.prizeSpawner.restartSpawner) {
         script.prizeSpawner.restartSpawner();
+    }
+
+    if (script.audioManager && script.audioManager.playMusic) {
+        script.audioManager.playMusic();
     }
 
     refreshUI();
@@ -148,6 +153,10 @@ function gameOver() {
     if (score > highScore) {
         highScore = score;
         saveHighScore();
+    }
+
+    if (script.audioManager && script.audioManager.stopMusic) {
+        script.audioManager.stopMusic();
     }
 
     refreshUI();

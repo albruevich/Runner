@@ -19,6 +19,27 @@ To open, edit, or run this project locally you need:
 - Snapchat account (optional, for mobile testing)
 - Windows or macOS
 
+## Setup
+
+This project uses **Git LFS** for large asset files.
+
+It is recommended to clone the repository instead of downloading ZIP archives.
+
+git clone <repo-url>
+cd <project-folder>
+git lfs install
+git lfs pull
+
+Downloading the project as ZIP may result in missing or broken asset references inside Lens Studio.
+
+## Preview Mode
+
+For the best gameplay preview inside Lens Studio, use:
+
+- **World** mode
+
+Some other preview environments (such as Idle / Face modes) may affect camera framing and are intended for AR testing rather than gameplay.
+
 ## Gameplay
 
 - Move between 3 lanes

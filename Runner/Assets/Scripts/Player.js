@@ -95,30 +95,36 @@ function updatePlayer() {
     }
 
     var dt = getDeltaTime();
+    var speedMultiplier = getGameSpeedMultiplier();
     var transform = script.targetObject.getTransform();
     var pos = transform.getLocalPosition();
 
     var targetX = currentLane * script.config.laneDistance;
-    pos.x = lerp(pos.x, targetX, moveSpeed * dt);
+    pos.x = lerp(pos.x, targetX, moveSpeed * speedMultiplier * dt);
 
     if (isJumping) {
+
         if (!isHanging && !isFalling) {
-            jumpProgress += dt * jumpUpSpeed;
+
+           jumpProgress += dt * jumpUpSpeed * speedMultiplier;
 
             if (jumpProgress >= 1) {
                 jumpProgress = 1;
                 isHanging = true;
                 hangTimer = hangTime;
             }
+
         } else if (isHanging) {
-            hangTimer -= dt;
+
+            hangTimer -= dt * speedMultiplier;
 
             if (hangTimer <= 0) {
                 isHanging = false;
                 isFalling = true;
             }
         } else if (isFalling) {
-            jumpProgress -= dt * jumpDownSpeed;
+
+            jumpProgress -= dt * jumpDownSpeed * speedMultiplier;
 
             if (jumpProgress <= 0) {
                 jumpProgress = 0;
@@ -236,6 +242,14 @@ function onHitObstacle(obstacle) {
     if (script.gameManager) {
         script.gameManager.takeDamage();
     }
+}
+
+function getGameSpeedMultiplier() {
+    if (!script.gameManager || !script.config || !script.config.startSpeed) {
+        return 1;
+    }
+
+    return script.gameManager.currentSpeed / script.config.startSpeed;
 }
 
 initialize();

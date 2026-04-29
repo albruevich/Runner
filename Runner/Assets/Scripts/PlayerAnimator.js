@@ -8,18 +8,7 @@ var currentState = "";
 
 function initialize() {
 
-    if (!script.player) {
-        print("PlayerAnimator: player is not assigned.");
-        return;
-    }
-
-    if (!script.gameManager) {
-        print("PlayerAnimator: gameManager is not assigned.");
-        return;
-    }
-
-    if (!script.animationPlayer) {
-        print("PlayerAnimator: animationPlayer is not assigned.");
+    if (!script.player || !script.gameManager || !script.animationPlayer) {
         return;
     }
 
@@ -32,6 +21,8 @@ function updateAnimator() {
         return;
     }
 
+    updatePlaybackSpeed();
+
     if (script.gameManager.isGameOver || script.gameManager.isHit) {
         playIdle();
         return;
@@ -41,6 +32,31 @@ function updateAnimator() {
         playJump();
     } else {
         playRun();
+    }
+}
+
+function updatePlaybackSpeed() {
+
+    var speedMultiplier = 1;
+
+    if (script.gameManager.currentSpeed && script.gameManager.config) {
+        speedMultiplier =
+            script.gameManager.currentSpeed /
+            script.gameManager.config.startSpeed;
+    }
+
+    speedMultiplier = clamp(speedMultiplier, 0.8, 2.5);
+
+    setClipSpeed("Run", speedMultiplier);
+    setClipSpeed("Jump", speedMultiplier);
+}
+
+function setClipSpeed(name, speed) {
+
+    var clip = script.animationPlayer.getClip(name);
+
+    if (clip) {
+        clip.playbackSpeed = speed;
     }
 }
 
@@ -85,6 +101,10 @@ function stopAll() {
     script.animationPlayer.stopClip("Run");
     script.animationPlayer.stopClip("Jump");
     script.animationPlayer.stopClip("Idle");
+}
+
+function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
 }
 
 script.createEvent("OnStartEvent").bind(initialize);

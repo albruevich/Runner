@@ -1,6 +1,8 @@
 // GameConfig.js 
 
-//@input float laneDistance = 15
+//@input float laneWidth = 15
+
+//@input int obstaclePoolSize = 10
 //@input float obstacleSpawnInterval = 1.2
 //@input float obstacleSpawnZ = -300
 //@input float obstacleGroundY = 5

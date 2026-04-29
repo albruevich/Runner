@@ -8,6 +8,7 @@
 //@input Component.ScriptComponent audioManager
 //@input SceneObject playButton
 //@input Component.ScriptComponent scoreScaleEffect
+//@input SceneObject road
 //@input SceneObject[] hearts
 
 var hp = 0;
@@ -46,6 +47,8 @@ function initialize() {
         highScore = store.getInt("highScore");
     }
 
+    setupRoadWidth();
+
     refreshUI();
 }
 
@@ -56,6 +59,20 @@ function cacheReferences() {
     audioManager = script.audioManager;
     scoreScaleEffect = script.scoreScaleEffect;
     hearts = script.hearts;
+}
+
+function setupRoadWidth() {
+
+    if (!script.road || !config) {
+        return;
+    }
+
+    var roadTransform = script.road.getTransform();
+    var scale = roadTransform.getLocalScale();
+
+    scale.x = config.laneWidth * 3 + 6;
+
+    roadTransform.setLocalScale(scale);
 }
 
 function getMaxHp() {

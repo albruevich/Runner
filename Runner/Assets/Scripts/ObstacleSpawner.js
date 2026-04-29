@@ -4,7 +4,6 @@
 //@input Component.ScriptComponent config
 //@input Asset.ObjectPrefab obstaclePrefab
 //@input Component.ScriptComponent prizeSpawner
-//@input int poolSize = 10
 
 var gameManager;
 var config;
@@ -43,7 +42,7 @@ function createPool() {
     pool = [];
     script.pool = pool;
 
-    for (var i = 0; i < script.poolSize; i++) {
+    for (var i = 0; i < config.obstaclePoolSize; i++) {
         var obstacle = obstaclePrefab.instantiate(null);
 
         obstacle.name = "Obstacle_" + i;
@@ -96,7 +95,7 @@ function findFreeObstaclePosition() {
     for (var i = 0; i < lanes.length; i++) {
         for (var j = 0; j < heights.length; j++) {
             candidates.push({
-                x: lanes[i] * config.laneDistance,
+                x: lanes[i] * config.laneWidth,
                 y: heights[j],
                 z: z
             });

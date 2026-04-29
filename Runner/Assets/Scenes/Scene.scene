@@ -411,6 +411,8 @@
   Enabled: true
   ScriptAsset: !<reference> c44e349d-2eb0-40dc-a767-65bd0e247b0f
   ScriptInputsDefault:
+    laneWidth: true
+    obstaclePoolSize: true
     obstacleSpawnInterval: true
     obstacleGroundY: true
     obstacleUpperY: true
@@ -419,14 +421,14 @@
     spawnCriticalDistance: true
     collisionZDistance: true
     laneTolerance: true
-    startHp: true
     startSpeed: true
     speedIncreasePerSecond: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
-      laneDistance: !<float> 15.000000
+      laneWidth: !<float> 15.000000
+      obstaclePoolSize: 10
       obstacleSpawnInterval: 1.200000
       obstacleSpawnZ: !<float> -350.000000
       obstacleGroundY: !<float> 5.000000
@@ -441,7 +443,6 @@
       spawnCriticalDistance: !<float> 20.000000
       collisionZDistance: !<float> 8.000000
       laneTolerance: 0.500000
-      startHp: 3
       startSpeed: !<float> 60.000000
       speedIncreasePerSecond: 1.500000
       maxSpeed: !<float> 300.000000
@@ -547,7 +548,6 @@
       config: !<reference.ScriptComponent> 30c255f4-8d61-4450-b454-76896d2fa707
       obstaclePrefab: !<reference.ObjectPrefab> 4a5c0ff3-27b9-4b3b-b824-27ac0d832fd0
       prizeSpawner: !<reference.ScriptComponent> e5b305a0-3dd6-4939-a3f4-b67bd73a6505
-      poolSize: 10
   ScriptTypes:
     "":
       {}
@@ -1068,6 +1068,7 @@
       audioManager: !<reference.ScriptComponent> 6512711b-b254-4ff4-9b8a-37cebecf2f8d
       playButton: !<reference.SceneObject> 19c20c44-052a-417e-97fc-e547777efcce
       scoreScaleEffect: !<reference.ScriptComponent> 38fa18e4-9143-438e-9354-bacf939e1cb9
+      road: !<reference.SceneObject> 133a66a2-cde0-4096-927e-c9135be5f9ca
       hearts: !<reference.SceneObject[]>
         - !<reference> 36659af4-da70-420c-a1c8-790e1e2092fa
         - !<reference> 6251ea53-41b8-4516-a176-0614f34740ec

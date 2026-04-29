@@ -170,7 +170,7 @@ function updatePlayer() {
 }
 
 function updateMovement(pos, dt, speedMultiplier) {
-    var targetX = currentLane * config.laneDistance;
+    var targetX = currentLane * config.laneWidth;
     pos.x = lerp(pos.x, targetX, moveSpeed * speedMultiplier * dt);
 }
 

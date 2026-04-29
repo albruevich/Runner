@@ -28,11 +28,12 @@
   ScriptInputsHidden:
     collisionZDistance: false
     jumpPrizeChance: false
-    laneDistance: false
     laneTolerance: false
+    laneWidth: false
     maxSpeed: false
     obstacleGroundY: false
     obstacleHideZ: false
+    obstaclePoolSize: false
     obstacleSpawnInterval: false
     obstacleSpawnZ: false
     obstacleUpperY: false
@@ -53,7 +54,8 @@
   Attachments:
     []
   DefaultScriptInputs:
-    - laneDistance: !<float> 4.000000
+    - laneWidth: !<float> 15.000000
+      obstaclePoolSize: 10
       obstacleSpawnInterval: 1.200000
       obstacleSpawnZ: !<float> 80.000000
       obstacleGroundY: !<float> 5.000000

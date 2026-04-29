@@ -97,7 +97,7 @@ function findFreePrizePosition() {
         for (var j = 0; j < heights.length; j++) {
 
             candidates.push({
-                x: lanes[i] * config.laneDistance,
+                x: lanes[i] * config.laneWidth,
                 y: heights[j],
                 z: z
             });

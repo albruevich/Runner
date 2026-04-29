@@ -33,6 +33,7 @@
     obstacleSpawner: false
     playButton: false
     prizeSpawner: false
+    road: false
     scoreScaleEffect: false
     scoreText: false
   ScriptTypesHidden:
@@ -52,6 +53,7 @@
       audioManager: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
       playButton: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       scoreScaleEffect: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      road: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       hearts: !<reference.SceneObject[]>
         []
   ScriptTypes:

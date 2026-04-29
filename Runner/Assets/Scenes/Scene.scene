@@ -482,10 +482,10 @@
   ClipRangeType: Frames
   AnimationClips:
     - !<AnimationClip>
-      AnimationAsset: !<reference> 76cdbae6-1bc0-464c-9357-7e1341dae790
-      Name: Clip 0
+      AnimationAsset: !<reference> 098e6d66-b5bb-4baf-a185-a4dbf98eb724
+      Name: Run
       Weight: 1.000000
-      PlaybackSpeed: 1.500000
+      PlaybackSpeed: 1.000000
       Begin: 0.066667
       End: 2.000000
       Offset: 0.066667
@@ -531,7 +531,7 @@
     []
   Name: BitmojiAnimationController
   Enabled: true
-  ScriptAsset: !<reference> d51ea3ae-e201-40c4-8a9a-6630588cea6b
+  ScriptAsset: !<reference> dc252d21-4fa2-47c9-a390-e6ba17d11979
   ScriptInputsDefault:
     bitmoji3dComponent: true
     animationPlayer: true
@@ -543,8 +543,8 @@
     "":
       bitmoji3dComponent: !<reference.ScriptComponent> 876f56ea-dd0b-4ef1-a581-f93fef35f1ac
       animationPlayer: !<reference.AnimationPlayer> 3dca2c0e-54de-46d4-a440-38d7378deb66
-      animationAsset: !<reference.AnimationAsset> 76cdbae6-1bc0-464c-9357-7e1341dae790
-      heavyAnimationAsset: !<reference.AnimationAsset> deb710b1-3fb9-4516-af59-4e40fe5c53ee
+      animationAsset: !<reference.AnimationAsset> 098e6d66-b5bb-4baf-a185-a4dbf98eb724
+      heavyAnimationAsset: !<reference.AnimationAsset> 92302890-0d08-4cfe-86f4-ab85022758d4
   ScriptTypes:
     "":
       {}

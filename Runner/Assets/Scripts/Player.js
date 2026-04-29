@@ -227,7 +227,6 @@ function onCollectPrize(prize) {
 
     if (script.gameManager && script.gameManager.addScore) {
         script.gameManager.addScore(1);
-        print("ok");
     }
 }
 

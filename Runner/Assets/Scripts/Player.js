@@ -106,7 +106,7 @@ function updatePlayer() {
 
         if (!isHanging && !isFalling) {
 
-           jumpProgress += dt * jumpUpSpeed * speedMultiplier;
+            jumpProgress += dt * jumpUpSpeed * speedMultiplier;
 
             if (jumpProgress >= 1) {
                 jumpProgress = 1;

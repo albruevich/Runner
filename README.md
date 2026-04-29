@@ -50,7 +50,6 @@ Some other preview environments (such as Idle / Face modes) may affect camera fr
 - 3 hearts (lives)
 - Game speed increases over time
 - High score is saved locally
-- Restart instantly after Game Over
 
 ## Demo
 

@@ -61,11 +61,7 @@ function initialize() {
 
 function moveLeft() {
 
-    if (script.gameManager) {
-        script.gameManager.startGame();
-    }
-
-    if (script.gameManager && (script.gameManager.isGameOver || script.gameManager.isHit || script.gameManager.isStartPause)) {
+    if (!canControlPlayer()) {
         return;
     }
 
@@ -74,11 +70,7 @@ function moveLeft() {
 
 function moveRight() {
 
-    if (script.gameManager) {
-        script.gameManager.startGame();
-    }
-
-    if (script.gameManager && (script.gameManager.isGameOver || script.gameManager.isHit || script.gameManager.isStartPause)) {
+    if (!canControlPlayer()) {
         return;
     }
 
@@ -87,24 +79,24 @@ function moveRight() {
 
 function jump() {
 
-    if (script.gameManager) {
-        script.gameManager.startGame();
+    var gameManager = script.gameManager;
+
+    if (!gameManager) {
+        return;
     }
 
-    if (script.gameManager && script.gameManager.isGameOver) {
+    gameManager.startGame();
 
-        if (script.gameManager.restartGame) {
-            script.gameManager.restartGame();
+    if (gameManager.isGameOver) {
+
+        if (gameManager.restartGame) {
+            gameManager.restartGame();
         }
 
         return;
     }
 
-    if (script.gameManager && (script.gameManager.isHit || script.gameManager.isStartPause)) {
-        return;
-    }
-
-    if (isJumping) {
+    if (!canControlPlayer() || isJumping) {
         return;
     }
 
@@ -115,18 +107,35 @@ function jump() {
     hangTimer = 0;
 }
 
+function canControlPlayer() {
+
+    var gameManager = script.gameManager;
+
+    if (!gameManager) {
+        return false;
+    }
+
+    gameManager.startGame();
+
+    return !gameManager.isGameOver &&
+           !gameManager.isHit &&
+           !gameManager.isStartPause;
+}
+
 function updatePlayer() {
 
-    if (script.gameManager && script.gameManager.isGameOver) {
+    var gameManager = script.gameManager;
+
+    if (!gameManager) {
+        return;
+    }
+
+    if (gameManager.isGameOver) {
         resetJumpState();
         return;
     }
 
-    if (script.gameManager && script.gameManager.isStartPause) {
-        return;
-    }
-
-    if (!script.targetObject || !script.config) {
+    if (!script.targetObject || !script.config || gameManager.isStartPause) {
         return;
     }
 
@@ -179,7 +188,7 @@ function updatePlayer() {
     checkPrizeCollisions(pos);
     transform.setLocalPosition(pos);
 
-    if (pendingHitObstacle && script.gameManager && !script.gameManager.isHit) {
+    if (pendingHitObstacle && !gameManager.isHit) {
 
         pendingHitObstacle.enabled = false;
         pendingHitObstacle = null;
@@ -266,7 +275,7 @@ function onCollectPrize(prize) {
     if (script.gameManager && script.gameManager.addScore) {
         script.gameManager.addScore(1);
         playShineEffect();
-        if (script.audioManager && script.audioManager.playMusic) {
+        if (script.audioManager) {
             script.audioManager.playCollect();
         }
     }
@@ -284,7 +293,7 @@ function onHitObstacle(obstacle) {
         script.gameManager.takeDamage();
     }
 
-    if (script.audioManager && script.audioManager.playMusic) {
+    if (script.audioManager) {
         script.audioManager.playHit();
     }
 }

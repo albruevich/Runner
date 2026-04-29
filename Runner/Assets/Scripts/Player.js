@@ -300,3 +300,7 @@ script.createEvent("KeyPressEvent").bind(function (eventData) {
         jump();
     }
 });
+
+script.isPlayerJumping = function () {
+    return isJumping;
+};

@@ -5,6 +5,8 @@
 //@input Component.ScriptComponent config
 //@input Component.ScriptComponent obstacleSpawner
 //@input Component.ScriptComponent prizeSpawner
+//@input SceneObject shineImage
+//@input Component.Image shineImageComponent
 
 var currentLane = 0; // -1 = left, 0 = center, 1 = right
 
@@ -30,6 +32,10 @@ var swipeThreshold = 0.08;
 
 var pendingHitObstacle = null;
 
+var shineTimer = 0;
+var shineDuration = 0.25;
+var shineStartAlpha = 1.0;
+
 function initialize() {
     if (!script.targetObject) {
         print("Target is not assigned.");
@@ -39,6 +45,14 @@ function initialize() {
     if (!script.config) {
         print("Config is not assigned.");
         return;
+    }
+
+    if (script.shineImageComponent) {
+        shineStartAlpha = script.shineImageComponent.mainPass.baseColor.a;
+    }
+
+    if (script.shineImage) {
+        script.shineImage.enabled = false;
     }
 
     baseY = script.targetObject.getTransform().getLocalPosition().y;
@@ -148,6 +162,8 @@ function updatePlayer() {
         pendingHitObstacle.enabled = false;
         pendingHitObstacle = null;
     }
+
+    updateShineEffect(dt);
 }
 
 function lerp(a, b, t) {
@@ -227,6 +243,7 @@ function onCollectPrize(prize) {
 
     if (script.gameManager && script.gameManager.addScore) {
         script.gameManager.addScore(1);
+        playShineEffect();
     }
 }
 
@@ -249,6 +266,44 @@ function getGameSpeedMultiplier() {
     }
 
     return script.gameManager.currentSpeed / script.config.startSpeed;
+}
+
+function playShineEffect() {
+
+    shineTimer = shineDuration;
+
+    if (script.shineImage) {
+        script.shineImage.enabled = true;
+    }
+
+    setShineAlpha(shineStartAlpha);
+}
+
+function updateShineEffect(dt) {
+
+    if (!script.shineImage || shineTimer <= 0) {
+        return;
+    }
+
+    shineTimer -= dt;
+
+    var alpha = shineStartAlpha * (shineTimer / shineDuration);
+    setShineAlpha(alpha);
+
+    if (shineTimer <= 0) {
+        script.shineImage.enabled = false;
+    }
+}
+
+function setShineAlpha(alpha) {
+
+    if (!script.shineImageComponent) {
+        return;
+    }
+
+    var color = script.shineImageComponent.mainPass.baseColor;
+    color.a = alpha;
+    script.shineImageComponent.mainPass.baseColor = color;
 }
 
 initialize();

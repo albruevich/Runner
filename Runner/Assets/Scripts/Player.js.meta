@@ -30,6 +30,8 @@
     gameManager: false
     obstacleSpawner: false
     prizeSpawner: false
+    shineImage: false
+    shineImageComponent: false
     targetObject: false
   ScriptTypesHidden:
     {}
@@ -45,6 +47,8 @@
       config: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
       obstacleSpawner: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
       prizeSpawner: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      shineImage: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      shineImageComponent: !<reference.Image> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
       {}

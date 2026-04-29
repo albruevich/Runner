@@ -371,6 +371,33 @@
     []
   Components:
     - !<own> 30c255f4-8d61-4450-b454-76896d2fa707
+- !<Canvas/2239f18f-904c-4b7f-891a-29ec1e1395a9>
+  PrefabRemaps:
+    []
+  Name: Canvas
+  Enabled: true
+  UnitType: World
+  SortingType: Depth
+  WorldSpaceRect:
+    left: -15.000000
+    bottom: -20.000000
+    right: 15.000000
+    top: 20.000000
+- !<SceneObject/22571390-ab9d-4fe1-9697-cf8dd8aa125a>
+  PrefabRemaps:
+    []
+  Name: ShineImage
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 3.000000, y: 4.000000, z: 4.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 829c14e4-92f1-4349-9031-bd482c699a87
 - !<SceneObject/2a775cb3-02f2-464f-a6e3-523ca89e148a>
   PrefabRemaps:
     []
@@ -636,6 +663,7 @@
   Children:
     - !<own> 3a47086d-95da-4c57-964e-5f12a7aa894c
     - !<own> 49c2a4ed-907c-4e05-b750-f51d707ff262
+    - !<own> 6ff62eee-710a-4f62-b27c-0237e43b12da
   Components:
     - !<own> ed616579-0fb0-41de-9fc9-ddaad9dd6340
     - !<own> fe72a79d-6116-4837-a29d-601bd89e2b42
@@ -688,6 +716,21 @@
   Components:
     - !<own> 5a964625-0486-4197-891a-e7887d9fac96
     - !<own> bcea7211-d5b0-4e88-8e28-29696d18a23e
+- !<SceneObject/6ff62eee-710a-4f62-b27c-0237e43b12da>
+  PrefabRemaps:
+    []
+  Name: Canvas
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 1.500000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 22571390-ab9d-4fe1-9697-cf8dd8aa125a
+  Components:
+    - !<own> 2239f18f-904c-4b7f-891a-29ec1e1395a9
 - !<SceneObject/773c681d-edeb-478c-96db-46af7b754483>
   PrefabRemaps:
     []
@@ -715,6 +758,25 @@
     bottom: -20.000000
     right: 15.000000
     top: 20.000000
+- !<Image/829c14e4-92f1-4349-9031-bd482c699a87>
+  PrefabRemaps:
+    []
+  Name: Image
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Fit
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 72f22c9e-c9ee-4c65-80eb-7e91be5765df
+  FlipX: false
+  FlipY: false
+  RotationAngle: 0
+  Pivot: {x: 0.000000, y: 0.000000}
+  ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
 - !<ScriptComponent/876f56ea-dd0b-4ef1-a581-f93fef35f1ac>
   PrefabRemaps:
     []
@@ -1194,6 +1256,8 @@
       config: !<reference.ScriptComponent> 30c255f4-8d61-4450-b454-76896d2fa707
       obstacleSpawner: !<reference.ScriptComponent> 3b4a3655-d0de-41e3-be40-5ef96413e1bc
       prizeSpawner: !<reference.ScriptComponent> e5b305a0-3dd6-4939-a3f4-b67bd73a6505
+      shineImage: !<reference.SceneObject> 22571390-ab9d-4fe1-9697-cf8dd8aa125a
+      shineImageComponent: !<reference.Image> 829c14e4-92f1-4349-9031-bd482c699a87
   ScriptTypes:
     "":
       {}

@@ -32,9 +32,9 @@
   StretchMode: Stretch
   VerticalAlignment: Center
   HorizontalAlignment: Center
-  MeshShadowMode: None
-  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-  ShadowDensity: 1.000000
+  MeshShadowMode: Caster
+  ShadowColor: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+  ShadowDensity: 0.600000
   Materials:
     - !<reference> 8d06d6f7-166d-4029-9301-73816aa5a935
   Mesh: !<reference> 22c699d3-3871-4034-afac-5b7ab2864963

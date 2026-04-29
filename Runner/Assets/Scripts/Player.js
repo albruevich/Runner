@@ -48,20 +48,12 @@ function moveLeft() {
         return;
     }
 
-    if (isJumping) {
-        return;
-    }
-
     currentLane = Math.max(-1, currentLane - 1);
 }
 
 function moveRight() {
 
     if (script.gameManager && (script.gameManager.isGameOver || script.gameManager.isHit)) {
-        return;
-    }
-
-    if (isJumping) {
         return;
     }
 
@@ -175,9 +167,11 @@ function checkObstacleCollisions(playerPos) {
 
         var sameLane = Math.abs(playerPos.x - obstaclePos.x) < script.config.laneTolerance;
         var closeEnough = dz < script.config.collisionZDistance;
-        var notJumping = !isJumping;
 
-        if (sameLane && closeEnough && notJumping) {
+        var isUpperObstacle = obstaclePos.y > script.config.obstacleGroundY + 1;
+        var canHitByHeight = isUpperObstacle ? isJumping : !isJumping;
+
+        if (sameLane && closeEnough && canHitByHeight) {
             onHitObstacle(obstacle);
         }
     }

@@ -1,7 +1,8 @@
 // GameManager.js
 
 //@input Component.ScriptComponent config
-//@input Component.ScriptComponent spawner
+//@input Component.ScriptComponent obstacleSpawner
+//@input Component.ScriptComponent prizeSpawner
 //@input Component.Text hpText
 //@input Component.Text scoreText
 //@input Component.Text gameOverText
@@ -54,8 +55,12 @@ script.restartGame = function () {
     script.isHit = false;
     hitTimer = 0;
 
-    if (script.spawner && script.spawner.restartSpawner) {
-        script.spawner.restartSpawner();
+    if (script.obstacleSpawner && script.obstacleSpawner.restartSpawner) {
+        script.obstacleSpawner.restartSpawner();
+    }
+
+    if (script.prizeSpawner && script.prizeSpawner.restartSpawner) {
+        script.prizeSpawner.restartSpawner();
     }
 
     refreshUI();

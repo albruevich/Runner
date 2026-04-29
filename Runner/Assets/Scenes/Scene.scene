@@ -140,7 +140,7 @@
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 40.000000, y: 85.000000, z: 20.000000}
-    Rotation: {x: 70.000000, y: 10.000000, z: 150.000000}
+    Rotation: {x: 75.000000, y: 0.000000, z: 165.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
@@ -155,8 +155,8 @@
   renderLayer: 1310719
   LightType: Directional
   Intensity: 1.000000
-  ShadowDensity: 0.440000
-  ShadowBlurRadius: 4.000000
+  ShadowDensity: 1.000000
+  ShadowBlurRadius: 1.000000
   ShadowTextureSize: 512
   AutoLightSourcePosition: true
   AutoShadowFrustumSize: true
@@ -178,7 +178,7 @@
   OuterConeAngle: 45.000000
   FalloffType: None
   FalloffRange: .inf
-  ShadowType: None
+  ShadowType: Projective
 - !<SceneObject/00056e79-b066-62ca-0000-000000001406>
   PrefabRemaps:
     []
@@ -396,6 +396,9 @@
   Enabled: true
   ScriptAsset: !<reference> c44e349d-2eb0-40dc-a767-65bd0e247b0f
   ScriptInputsDefault:
+    obstacleGroundY: true
+    obstacleUpperY: true
+    upperObstacleChance: true
     prizePoolSize: true
     prizeSpawnInterval: true
     prizeGroundY: true
@@ -411,7 +414,9 @@
       laneDistance: !<float> 15.000000
       spawnInterval: 1.500000
       obstacleSpawnZ: !<float> -350.000000
-      obstacleY: !<float> 5.000000
+      obstacleGroundY: !<float> 5.000000
+      obstacleUpperY: !<float> 28.000000
+      upperObstacleChance: 0.350000
       obstacleSpeed: !<float> 60.000000
       obstacleHideZ: !<float> 40.000000
       prizePoolSize: 8
@@ -685,7 +690,7 @@
   StretchMode: Stretch
   VerticalAlignment: Center
   HorizontalAlignment: Center
-  MeshShadowMode: None
+  MeshShadowMode: Receiver
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
@@ -709,7 +714,8 @@
   ScriptInputs:
     "":
       config: !<reference.ScriptComponent> 30c255f4-8d61-4450-b454-76896d2fa707
-      spawner: !<reference.ScriptComponent> 3b4a3655-d0de-41e3-be40-5ef96413e1bc
+      obstacleSpawner: !<reference.ScriptComponent> 3b4a3655-d0de-41e3-be40-5ef96413e1bc
+      prizeSpawner: !<reference.ScriptComponent> e5b305a0-3dd6-4939-a3f4-b67bd73a6505
       hpText: !<reference.Text> 07a26f98-934b-462f-b175-1e3c207ee5b8
       scoreText: !<reference.Text> b9f41827-12a1-4a97-8502-41aef923701d
       gameOverText: !<reference.Text> bcea7211-d5b0-4e88-8e28-29696d18a23e
@@ -992,9 +998,9 @@
   StretchMode: Stretch
   VerticalAlignment: Center
   HorizontalAlignment: Center
-  MeshShadowMode: None
-  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-  ShadowDensity: 1.000000
+  MeshShadowMode: Caster
+  ShadowColor: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+  ShadowDensity: 0.600000
   Materials:
     - !<reference> 65c33972-d59a-4d4a-851c-cbba670889c4
   Mesh: !<reference> 22c699d3-3871-4034-afac-5b7ab2864963

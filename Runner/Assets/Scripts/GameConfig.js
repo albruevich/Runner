@@ -3,7 +3,9 @@
 //@input float laneDistance = 15
 //@input float spawnInterval = 1.5
 //@input float obstacleSpawnZ = -300
-//@input float obstacleY = 5
+//@input float obstacleGroundY = 5
+//@input float obstacleUpperY = 28
+//@input float upperObstacleChance = 0.35
 //@input float obstacleSpeed = 60
 //@input float obstacleHideZ = 40
 

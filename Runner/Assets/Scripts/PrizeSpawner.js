@@ -134,6 +134,10 @@ function restartSpawner() {
     spawnTimer = 0;
     nextPrizeIndex = 0;
 
+    if (!script.pool) {
+        return;
+    }
+
     for (var i = 0; i < script.pool.length; i++) {
         script.pool[i].enabled = false;
     }

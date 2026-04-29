@@ -70,8 +70,10 @@ function spawnObstacle() {
     var pos = transform.getLocalPosition();
 
     pos.x = laneIndex * script.config.laneDistance;
-    pos.y = script.config.obstacleY;
     pos.z = script.config.obstacleSpawnZ;
+
+    var isUpper = Math.random() < script.config.upperObstacleChance;
+    pos.y = isUpper ? script.config.obstacleUpperY : script.config.obstacleGroundY;
 
     transform.setLocalPosition(pos);
     obstacle.enabled = true;

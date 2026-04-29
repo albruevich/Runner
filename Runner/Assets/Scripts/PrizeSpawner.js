@@ -42,7 +42,10 @@ function updateSpawner() {
 
     if (spawnTimer <= 0) {
         spawnPrize();
-        spawnTimer = script.config.prizeSpawnInterval;
+
+        spawnTimer = script.gameManager
+            ? script.gameManager.getSpawnInterval(script.config.prizeSpawnInterval)
+            : script.config.prizeSpawnInterval;
     }
 }
 

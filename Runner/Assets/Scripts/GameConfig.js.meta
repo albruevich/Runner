@@ -30,10 +30,10 @@
     jumpPrizeChance: false
     laneDistance: false
     laneTolerance: false
+    maxSpeed: false
     obstacleGroundY: false
     obstacleHideZ: false
     obstacleSpawnZ: false
-    obstacleSpeed: false
     obstacleUpperY: false
     prizeGroundY: false
     prizeJumpY: false
@@ -41,7 +41,9 @@
     prizePoolSize: false
     prizeSpawnInterval: false
     spawnInterval: false
+    speedIncreasePerSecond: false
     startHp: false
+    startSpeed: false
     upperObstacleChance: false
   ScriptTypesHidden:
     {}
@@ -58,7 +60,6 @@
       obstacleGroundY: !<float> 5.000000
       obstacleUpperY: !<float> 28.000000
       upperObstacleChance: 0.350000
-      obstacleSpeed: !<float> 20.000000
       obstacleHideZ: !<float> -20.000000
       prizePoolSize: 8
       prizeSpawnInterval: !<float> 1.000000
@@ -69,6 +70,9 @@
       collisionZDistance: !<float> 8.000000
       laneTolerance: 0.500000
       startHp: 3
+      startSpeed: !<float> 60.000000
+      speedIncreasePerSecond: 1.500000
+      maxSpeed: !<float> 140.000000
   ScriptTypes:
     -
       {}

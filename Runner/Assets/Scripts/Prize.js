@@ -20,7 +20,8 @@ function updatePrize() {
     var transform = obj.getTransform();
     var pos = transform.getLocalPosition();
 
-    pos.z += script.config.obstacleSpeed * dt;
+    var speed = script.gameManager ? script.gameManager.currentSpeed : script.config.startSpeed;
+    pos.z += speed * dt;
 
     if (pos.z > script.config.obstacleHideZ) {
         obj.enabled = false;

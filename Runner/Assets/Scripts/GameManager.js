@@ -13,17 +13,21 @@ var highScore = 0;
 var hitTimer = 0;
 
 function initialize() {
+
     hp = script.config.startHp;
     score = 0;
 
     script.isGameOver = false;
     script.isHit = false;
+    script.currentSpeed = script.config.startSpeed;
 
     var store = global.persistentStorageSystem.store;
 
     if (store.has("highScore")) {
         highScore = store.getInt("highScore");
     }
+
+    // resetHiScore();
 
     refreshUI();
 }
@@ -54,6 +58,7 @@ script.restartGame = function () {
     script.isGameOver = false;
     script.isHit = false;
     hitTimer = 0;
+    script.currentSpeed = script.config.startSpeed;
 
     if (script.obstacleSpawner && script.obstacleSpawner.restartSpawner) {
         script.obstacleSpawner.restartSpawner();
@@ -77,6 +82,16 @@ function saveHighScore() {
 
     store.putInt("highScore", highScore);
 }
+
+function resetHiScore() {
+
+    highScore = 0;
+
+    var store = global.persistentStorageSystem.store;
+    store.putInt("highScore", 0);
+
+    refreshUI();
+};
 
 function gameOver() {
     script.isGameOver = true;
@@ -105,6 +120,14 @@ function updateGameManager() {
             script.isHit = false;
         }
     }
+
+    if (!script.isGameOver && !script.isHit) {
+        script.currentSpeed += script.config.speedIncreasePerSecond * getDeltaTime();
+
+        if (script.currentSpeed > script.config.maxSpeed) {
+            script.currentSpeed = script.config.maxSpeed;
+        }
+    }
 }
 
 function refreshUI() {
@@ -119,9 +142,18 @@ function refreshUI() {
     }
 
     if (script.gameOverText) {
-        script.gameOverText.text = script.isGameOver
-            ? "GAME OVER\n\nJump to Restart"
-            : "";
+
+        if (script.isGameOver) {
+
+            var isNewHiScore = score >= highScore && score > 0;
+
+            script.gameOverText.text = isNewHiScore
+                ? "GAME OVER\n\nNEW HI SCORE: " + highScore + "\n\nJump to Restart"
+                : "GAME OVER\n\nJump to Restart";
+
+        } else {
+            script.gameOverText.text = "";
+        }
     }
 }
 
@@ -134,6 +166,12 @@ function padScore(value) {
 
     return text;
 }
+
+script.getSpawnInterval = function (baseInterval) {
+    var speedRatio = script.currentSpeed / script.config.startSpeed;
+
+    return baseInterval / speedRatio;
+};
 
 script.createEvent("OnStartEvent").bind(initialize);
 script.createEvent("UpdateEvent").bind(updateGameManager);

@@ -396,6 +396,7 @@
   Enabled: true
   ScriptAsset: !<reference> c44e349d-2eb0-40dc-a767-65bd0e247b0f
   ScriptInputsDefault:
+    spawnInterval: true
     obstacleGroundY: true
     obstacleUpperY: true
     upperObstacleChance: true
@@ -407,17 +408,18 @@
     collisionZDistance: true
     laneTolerance: true
     startHp: true
+    startSpeed: true
+    speedIncreasePerSecond: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
       laneDistance: !<float> 15.000000
-      spawnInterval: 1.500000
+      spawnInterval: 1.200000
       obstacleSpawnZ: !<float> -350.000000
       obstacleGroundY: !<float> 5.000000
       obstacleUpperY: !<float> 28.000000
       upperObstacleChance: 0.350000
-      obstacleSpeed: !<float> 60.000000
       obstacleHideZ: !<float> 40.000000
       prizePoolSize: 8
       prizeSpawnInterval: !<float> 1.000000
@@ -428,6 +430,9 @@
       collisionZDistance: !<float> 8.000000
       laneTolerance: 0.500000
       startHp: 3
+      startSpeed: !<float> 60.000000
+      speedIncreasePerSecond: 1.500000
+      maxSpeed: !<float> 220.000000
   ScriptTypes:
     "":
       {}

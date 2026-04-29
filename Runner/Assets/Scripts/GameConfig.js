@@ -6,7 +6,6 @@
 //@input float obstacleGroundY = 5
 //@input float obstacleUpperY = 28
 //@input float upperObstacleChance = 0.35
-//@input float obstacleSpeed = 60
 //@input float obstacleHideZ = 40
 
 //@input int prizePoolSize = 8
@@ -20,3 +19,6 @@
 //@input float laneTolerance = 0.5
 
 //@input int startHp = 3
+//@input float startSpeed = 60
+//@input float speedIncreasePerSecond = 1.2
+//@input float maxSpeed = 220

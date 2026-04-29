@@ -52,8 +52,12 @@ function updateSpawner() {
     spawnTimer -= getDeltaTime();
 
     if (spawnTimer <= 0) {
+        
         spawnObstacle();
-        spawnTimer = script.config.spawnInterval;
+
+        spawnTimer = script.gameManager
+            ? script.gameManager.getSpawnInterval(script.config.spawnInterval)
+            : script.config.spawnInterval;
     }
 }
 

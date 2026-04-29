@@ -7,6 +7,7 @@
 //@input Component.Text gameOverText
 //@input Component.ScriptComponent audioManager
 //@input SceneObject playButton
+//@input Component.ScriptComponent scoreScaleEffect
 //@input SceneObject[] hearts
 
 var hp = 0;
@@ -87,6 +88,11 @@ script.restartGame = function () {
 
 script.addScore = function (amount) {
     score += amount;
+
+    if (script.scoreScaleEffect && script.scoreScaleEffect.play) {
+        script.scoreScaleEffect.play();
+    }
+
     refreshUI();
 };
 

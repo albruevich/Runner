@@ -44,7 +44,7 @@ function initialize() {
 
 function moveLeft() {
 
-    if (script.gameManager && script.gameManager.isGameOver) {
+    if (script.gameManager && (script.gameManager.isGameOver || script.gameManager.isHit)) {
         return;
     }
 
@@ -57,7 +57,7 @@ function moveLeft() {
 
 function moveRight() {
 
-    if (script.gameManager && script.gameManager.isGameOver) {
+    if (script.gameManager && (script.gameManager.isGameOver || script.gameManager.isHit)) {
         return;
     }
 
@@ -70,7 +70,7 @@ function moveRight() {
 
 function jump() {
 
-    if (script.gameManager && script.gameManager.isGameOver) {
+    if (script.gameManager && (script.gameManager.isGameOver || script.gameManager.isHit)) {
 
         if (script.gameManager.restartGame) {
             script.gameManager.restartGame();
@@ -205,7 +205,10 @@ function checkPrizeCollisions(playerPos) {
         var sameLane = Math.abs(playerPos.x - prizePos.x) < script.config.laneTolerance;
         var closeEnough = dz < script.config.collisionZDistance;
 
-        if (sameLane && closeEnough) {
+        var isJumpPrize = prizePos.y > script.config.prizeGroundY + 1;
+        var canCollectByHeight = isJumpPrize ? isJumping : !isJumping;
+
+        if (sameLane && closeEnough && canCollectByHeight) {
             onCollectPrize(prize);
         }
     }

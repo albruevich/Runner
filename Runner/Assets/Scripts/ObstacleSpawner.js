@@ -41,7 +41,7 @@ function initialize() {
 
 function updateSpawner() {
 
-    if (script.gameManager && script.gameManager.isGameOver) {
+    if (script.gameManager && (script.gameManager.isGameOver || script.gameManager.isHit)) {
         return;
     }
 

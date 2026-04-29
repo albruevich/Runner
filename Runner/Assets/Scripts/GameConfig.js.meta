@@ -27,16 +27,18 @@
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     collisionZDistance: false
+    jumpPrizeChance: false
     laneDistance: false
     laneTolerance: false
     obstacleHideZ: false
     obstacleSpawnZ: false
     obstacleSpeed: false
     obstacleY: false
+    prizeGroundY: false
+    prizeJumpY: false
     prizeObstacleCheckZDistance: false
     prizePoolSize: false
     prizeSpawnInterval: false
-    prizeY: false
     spawnInterval: false
     startHp: false
   ScriptTypesHidden:
@@ -56,7 +58,9 @@
       obstacleHideZ: !<float> -20.000000
       prizePoolSize: 8
       prizeSpawnInterval: !<float> 1.000000
-      prizeY: !<float> 6.000000
+      prizeGroundY: !<float> 6.000000
+      prizeJumpY: !<float> 28.000000
+      jumpPrizeChance: 0.600000
       prizeObstacleCheckZDistance: !<float> 5.000000
       collisionZDistance: !<float> 8.000000
       laneTolerance: 0.500000

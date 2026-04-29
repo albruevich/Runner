@@ -34,7 +34,7 @@ function initialize() {
 
 function updateSpawner() {
 
-    if (script.gameManager && script.gameManager.isGameOver) {
+    if (script.gameManager && (script.gameManager.isGameOver || script.gameManager.isHit)) {
         return;
     }
 
@@ -66,8 +66,10 @@ function spawnPrize() {
     var pos = transform.getLocalPosition();
 
     pos.x = lane * script.config.laneDistance;
-    pos.y = script.config.prizeY;
     pos.z = script.config.obstacleSpawnZ;
+
+    var isJumpPrize = Math.random() < script.config.jumpPrizeChance;
+    pos.y = isJumpPrize ? script.config.prizeJumpY : script.config.prizeGroundY;
 
     transform.setLocalPosition(pos);
     prize.enabled = true;

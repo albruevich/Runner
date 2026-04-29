@@ -234,7 +234,7 @@
   RenderOrder: 0
   StretchMode: Stretch
   VerticalAlignment: Center
-  HorizontalAlignment: Center
+  HorizontalAlignment: Right
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
@@ -398,7 +398,8 @@
   ScriptInputsDefault:
     prizePoolSize: true
     prizeSpawnInterval: true
-    prizeY: true
+    prizeGroundY: true
+    prizeJumpY: true
     prizeObstacleCheckZDistance: true
     collisionZDistance: true
     laneTolerance: true
@@ -409,13 +410,15 @@
     "":
       laneDistance: !<float> 15.000000
       spawnInterval: 1.500000
-      obstacleSpawnZ: !<float> -300.000000
+      obstacleSpawnZ: !<float> -350.000000
       obstacleY: !<float> 5.000000
       obstacleSpeed: !<float> 60.000000
       obstacleHideZ: !<float> 40.000000
       prizePoolSize: 8
       prizeSpawnInterval: !<float> 1.000000
-      prizeY: !<float> 6.000000
+      prizeGroundY: !<float> 6.000000
+      prizeJumpY: !<float> 28.000000
+      jumpPrizeChance: 0.450000
       prizeObstacleCheckZDistance: !<float> 5.000000
       collisionZDistance: !<float> 8.000000
       laneTolerance: 0.500000
@@ -550,15 +553,15 @@
   RawMode: true
   ForceBasic: true
   Anchor:
-    left: 0.368144
-    bottom: 0.912069
-    right: 1.000000
+    left: 0.354485
+    bottom: 0.933199
+    right: 0.936341
     top: 0.999999
   Offset:
     left: 0.000000
-    bottom: 0.000018
+    bottom: -0.000021
     right: 0.000000
-    top: -2.958982
+    top: -2.103021
 - !<SceneObject/6f67a2d9-f429-4a6d-b1d7-ab951342e6b2>
   PrefabRemaps:
     []
@@ -657,15 +660,15 @@
   RawMode: true
   ForceBasic: true
   Anchor:
-    left: -1.000000
-    bottom: 0.912100
-    right: -0.256100
+    left: -0.954503
+    bottom: 0.933284
+    right: -0.090765
     top: 1.000000
   Offset:
     left: 0.000000
-    bottom: -0.000006
+    bottom: 0.000017
     right: 0.000000
-    top: -2.959006
+    top: -2.221983
 - !<ScreenRegionComponent/93841094-28e1-4bec-ad25-7525951bfcbd>
   PrefabRemaps:
     []
@@ -754,7 +757,7 @@
   RenderOrder: 0
   StretchMode: Stretch
   VerticalAlignment: Center
-  HorizontalAlignment: Center
+  HorizontalAlignment: Left
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000

@@ -8,21 +8,35 @@
 
 var hp = 0;
 var score = 0;
+var highScore = 0;
+var hitTimer = 0;
 
 function initialize() {
     hp = script.config.startHp;
     score = 0;
+
     script.isGameOver = false;
+    script.isHit = false;
+
+    var store = global.persistentStorageSystem.store;
+
+    if (store.has("highScore")) {
+        highScore = store.getInt("highScore");
+    }
 
     refreshUI();
 }
 
 script.takeDamage = function () {
-    if (script.isGameOver) {
+
+    if (script.isGameOver || script.isHit) {
         return;
     }
 
     hp--;
+
+    script.isHit = true;
+    hitTimer = 1.0;
 
     refreshUI();
 
@@ -32,9 +46,13 @@ script.takeDamage = function () {
 };
 
 script.restartGame = function () {
+
     hp = script.config.startHp;
     score = 0;
+
     script.isGameOver = false;
+    script.isHit = false;
+    hitTimer = 0;
 
     if (script.spawner && script.spawner.restartSpawner) {
         script.spawner.restartSpawner();
@@ -45,12 +63,43 @@ script.restartGame = function () {
 
 script.addScore = function (amount) {
     score += amount;
+
     refreshUI();
 };
 
+function saveHighScore() {
+    var store = global.persistentStorageSystem.store;
+
+    store.putInt("highScore", highScore);
+}
+
 function gameOver() {
     script.isGameOver = true;
+    script.isHit = false;
+    hitTimer = 0;
+
+    if (score > highScore) {
+        highScore = score;
+        saveHighScore();
+    }
+
     refreshUI();
+}
+
+function updateGameManager() {
+
+    if (script.isGameOver) {
+        return;
+    }
+
+    if (script.isHit) {
+
+        hitTimer -= getDeltaTime();
+
+        if (hitTimer <= 0) {
+            script.isHit = false;
+        }
+    }
 }
 
 function refreshUI() {
@@ -60,7 +109,8 @@ function refreshUI() {
     }
 
     if (script.scoreText) {
-        script.scoreText.text = "Score: " + score;
+        script.scoreText.text =
+            "HI   " + padScore(highScore) + "   " + padScore(score);
     }
 
     if (script.gameOverText) {
@@ -70,4 +120,15 @@ function refreshUI() {
     }
 }
 
+function padScore(value) {
+    var text = value.toString();
+
+    while (text.length < 4) {
+        text = "0" + text;
+    }
+
+    return text;
+}
+
 script.createEvent("OnStartEvent").bind(initialize);
+script.createEvent("UpdateEvent").bind(updateGameManager);

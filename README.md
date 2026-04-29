@@ -25,10 +25,12 @@ This project uses **Git LFS** for large asset files.
 
 It is recommended to clone the repository instead of downloading ZIP archives.
 
+```bash
 git clone <repo-url>
 cd <project-folder>
 git lfs install
 git lfs pull
+```
 
 Downloading the project as ZIP may result in missing or broken asset references inside Lens Studio.
 

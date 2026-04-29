@@ -3,11 +3,11 @@
 //@input Component.ScriptComponent config
 //@input Component.ScriptComponent obstacleSpawner
 //@input Component.ScriptComponent prizeSpawner
-//@input Component.Text hpText
 //@input Component.Text scoreText
 //@input Component.Text gameOverText
 //@input Component.ScriptComponent audioManager
 //@input SceneObject playButton
+//@input SceneObject[] hearts
 
 var hp = 0;
 var score = 0;
@@ -181,9 +181,7 @@ function resetHiScore() {
 
 function refreshUI() {
 
-    if (script.hpText) {
-        script.hpText.text = "HP: " + hp;
-    }
+    updateHearts();
 
     if (script.scoreText) {
         script.scoreText.text =
@@ -202,6 +200,22 @@ function refreshUI() {
 
         } else {
             script.gameOverText.text = "";
+        }
+    }
+}
+
+function updateHearts() {
+
+    if (!script.hearts) {
+        return;
+    }
+
+    for (var i = 0; i < script.hearts.length; i++) {
+
+        var heart = script.hearts[i];
+
+        if (heart) {
+            heart.enabled = i < hp;
         }
     }
 }

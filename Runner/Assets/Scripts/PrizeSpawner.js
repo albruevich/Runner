@@ -5,7 +5,6 @@
 //@input Component.ScriptComponent obstacleSpawner
 //@input Asset.ObjectPrefab prizePrefab
 
-var spawnTimer = 0;
 var nextPrizeIndex = 0;
 
 function initialize() {
@@ -32,23 +31,6 @@ function initialize() {
     restartSpawner();
 }
 
-function updateSpawner() {
-
-    if (script.gameManager && (script.gameManager.isGameOver || script.gameManager.isHit)) {
-        return;
-    }
-
-    spawnTimer -= getDeltaTime();
-
-    if (spawnTimer <= 0) {
-        spawnPrize();
-
-        spawnTimer = script.gameManager
-            ? script.gameManager.getSpawnInterval(script.config.prizeSpawnInterval)
-            : script.config.prizeSpawnInterval;
-    }
-}
-
 function spawnPrize() {
 
     var prize = getNextInactivePrize();
@@ -57,36 +39,61 @@ function spawnPrize() {
         return;
     }
 
-    var freeLanes = getFreeLanes();
+    var position = findFreePrizePosition();
 
-    if (freeLanes.length === 0) {
+    if (!position) {
         return;
     }
-
-    var lane = freeLanes[Math.floor(Math.random() * freeLanes.length)];
 
     var transform = prize.getTransform();
     var pos = transform.getLocalPosition();
 
-    pos.x = lane * script.config.laneDistance;
-    pos.z = script.config.obstacleSpawnZ;
-
-    var isJumpPrize = Math.random() < script.config.jumpPrizeChance;
-    pos.y = isJumpPrize ? script.config.prizeJumpY : script.config.prizeGroundY;
+    pos.x = position.x;
+    pos.y = position.y;
+    pos.z = position.z;
 
     transform.setLocalPosition(pos);
     prize.enabled = true;
 }
 
-function getFreeLanes() {
+function findFreePrizePosition() {
 
     var lanes = [-1, 0, 1];
-    var blocked = {};
+    var heights = [script.config.prizeGroundY, script.config.prizeJumpY];
+    var z = script.config.obstacleSpawnZ;
 
-    if (!script.obstacleSpawner || !script.obstacleSpawner.pool) {
-        return lanes;
+    var candidates = [];
+
+    for (var i = 0; i < lanes.length; i++) {
+        for (var j = 0; j < heights.length; j++) {
+            candidates.push({
+                x: lanes[i] * script.config.laneDistance,
+                y: heights[j],
+                z: z
+            });
+        }
     }
 
+    shuffle(candidates);
+
+    for (var k = 0; k < candidates.length; k++) {
+        var candidate = candidates[k];
+
+        if (isPositionFree(candidate.x, candidate.y, candidate.z)) {
+            return candidate;
+        }
+    }
+
+    return null;
+}
+
+function isPositionFree(x, y, z) {
+
+    if (!script.obstacleSpawner || !script.obstacleSpawner.pool) {
+        return true;
+    }
+
+    var targetPos = new vec3(x, y, z);
     var obstacles = script.obstacleSpawner.pool;
 
     for (var i = 0; i < obstacles.length; i++) {
@@ -97,23 +104,26 @@ function getFreeLanes() {
             continue;
         }
 
-        var pos = obstacle.getTransform().getLocalPosition();
+        var obstaclePos = obstacle.getTransform().getLocalPosition();
+        var distance = obstaclePos.distance(targetPos);
 
-        if (Math.abs(pos.z - script.config.obstacleSpawnZ) < script.config.prizeObstacleCheckZDistance) {
-            var laneIndex = Math.round(pos.x / script.config.laneDistance);
-            blocked[laneIndex] = true;
+        if (distance < script.config.spawnCriticalDistance) {
+            return false;
         }
     }
 
-    var free = [];
+    return true;
+}
 
-    for (var j = 0; j < lanes.length; j++) {
-        if (!blocked[lanes[j]]) {
-            free.push(lanes[j]);
-        }
+function shuffle(array) {
+
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
     }
-
-    return free;
 }
 
 function getNextInactivePrize() {
@@ -134,7 +144,6 @@ function getNextInactivePrize() {
 
 function restartSpawner() {
 
-    spawnTimer = 0;
     nextPrizeIndex = 0;
 
     if (!script.pool) {
@@ -146,7 +155,7 @@ function restartSpawner() {
     }
 }
 
+script.spawnPrize = spawnPrize;
 script.restartSpawner = restartSpawner;
 
 script.createEvent("OnStartEvent").bind(initialize);
-script.createEvent("UpdateEvent").bind(updateSpawner);

@@ -13,7 +13,8 @@
 //@input float prizeGroundY = 6
 //@input float prizeJumpY = 28
 //@input float jumpPrizeChance = 0.45
-//@input float prizeObstacleCheckZDistance = 5
+//@input float spawnCriticalDistance = 20
+
 
 //@input float collisionZDistance = 8
 //@input float laneTolerance = 0.5
@@ -22,3 +23,4 @@
 //@input float startSpeed = 60
 //@input float speedIncreasePerSecond = 1.2
 //@input float maxSpeed = 220
+

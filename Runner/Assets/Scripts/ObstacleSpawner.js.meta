@@ -30,6 +30,7 @@
     gameManager: false
     obstaclePrefab: false
     poolSize: false
+    prizeSpawner: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -42,6 +43,7 @@
     - gameManager: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
       config: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
       obstaclePrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
+      prizeSpawner: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
       poolSize: 8
   ScriptTypes:
     -

@@ -37,9 +37,9 @@
     obstacleUpperY: false
     prizeGroundY: false
     prizeJumpY: false
-    prizeObstacleCheckZDistance: false
     prizePoolSize: false
     prizeSpawnInterval: false
+    spawnCriticalDistance: false
     spawnInterval: false
     speedIncreasePerSecond: false
     startHp: false
@@ -66,7 +66,7 @@
       prizeGroundY: !<float> 6.000000
       prizeJumpY: !<float> 28.000000
       jumpPrizeChance: 0.600000
-      prizeObstacleCheckZDistance: !<float> 5.000000
+      spawnCriticalDistance: !<float> 20.000000
       collisionZDistance: !<float> 8.000000
       laneTolerance: 0.500000
       startHp: 3

@@ -12,6 +12,9 @@ var score = 0;
 var highScore = 0;
 var hitTimer = 0;
 
+var obstacleSpawnTimer = 0;
+var prizeSpawnTimer = 0;
+
 function initialize() {
 
     hp = script.config.startHp;
@@ -21,13 +24,14 @@ function initialize() {
     script.isHit = false;
     script.currentSpeed = script.config.startSpeed;
 
+    obstacleSpawnTimer = 0;
+    prizeSpawnTimer = 0;
+
     var store = global.persistentStorageSystem.store;
 
     if (store.has("highScore")) {
         highScore = store.getInt("highScore");
     }
-
-    // resetHiScore();
 
     refreshUI();
 }
@@ -60,6 +64,9 @@ script.restartGame = function () {
     hitTimer = 0;
     script.currentSpeed = script.config.startSpeed;
 
+    obstacleSpawnTimer = 0;
+    prizeSpawnTimer = 0;
+
     if (script.obstacleSpawner && script.obstacleSpawner.restartSpawner) {
         script.obstacleSpawner.restartSpawner();
     }
@@ -73,38 +80,8 @@ script.restartGame = function () {
 
 script.addScore = function (amount) {
     score += amount;
-
     refreshUI();
 };
-
-function saveHighScore() {
-    var store = global.persistentStorageSystem.store;
-
-    store.putInt("highScore", highScore);
-}
-
-function resetHiScore() {
-
-    highScore = 0;
-
-    var store = global.persistentStorageSystem.store;
-    store.putInt("highScore", 0);
-
-    refreshUI();
-};
-
-function gameOver() {
-    script.isGameOver = true;
-    script.isHit = false;
-    hitTimer = 0;
-
-    if (score > highScore) {
-        highScore = score;
-        saveHighScore();
-    }
-
-    refreshUI();
-}
 
 function updateGameManager() {
 
@@ -119,15 +96,76 @@ function updateGameManager() {
         if (hitTimer <= 0) {
             script.isHit = false;
         }
+
+        return;
     }
 
-    if (!script.isGameOver && !script.isHit) {
-        script.currentSpeed += script.config.speedIncreasePerSecond * getDeltaTime();
+    updateSpeed();
+    updateSpawning();
+}
 
-        if (script.currentSpeed > script.config.maxSpeed) {
-            script.currentSpeed = script.config.maxSpeed;
+function updateSpeed() {
+
+    script.currentSpeed += script.config.speedIncreasePerSecond * getDeltaTime();
+
+    if (script.currentSpeed > script.config.maxSpeed) {
+        script.currentSpeed = script.config.maxSpeed;
+    }
+}
+
+function updateSpawning() {
+
+    var dt = getDeltaTime();
+
+    obstacleSpawnTimer -= dt;
+    prizeSpawnTimer -= dt;
+
+    if (obstacleSpawnTimer <= 0) {
+
+        if (script.obstacleSpawner && script.obstacleSpawner.spawnObstacle) {
+            script.obstacleSpawner.spawnObstacle();
         }
+
+        obstacleSpawnTimer = script.getSpawnInterval(script.config.spawnInterval);
     }
+
+    if (prizeSpawnTimer <= 0) {
+
+        if (script.prizeSpawner && script.prizeSpawner.spawnPrize) {
+            script.prizeSpawner.spawnPrize();
+        }
+
+        prizeSpawnTimer = script.getSpawnInterval(script.config.prizeSpawnInterval);
+    }
+}
+
+function gameOver() {
+
+    script.isGameOver = true;
+    script.isHit = false;
+    hitTimer = 0;
+
+    if (score > highScore) {
+        highScore = score;
+        saveHighScore();
+    }
+
+    refreshUI();
+}
+
+function saveHighScore() {
+    var store = global.persistentStorageSystem.store;
+    store.putInt("highScore", highScore);
+}
+
+function resetHiScore() {
+
+    highScore = 0;
+
+    var store = global.persistentStorageSystem.store;
+    store.putInt("highScore", 0);
+
+    refreshUI();
 }
 
 function refreshUI() {
@@ -148,7 +186,7 @@ function refreshUI() {
             var isNewHiScore = score >= highScore && score > 0;
 
             script.gameOverText.text = isNewHiScore
-                ? "GAME OVER\n\nNEW HI SCORE: " + highScore + "\n\nJump to Restart"
+                ? "GAME OVER\n\nNEW HI SCORE: " + padScore(highScore) + "\n\nJump to Restart"
                 : "GAME OVER\n\nJump to Restart";
 
         } else {
@@ -169,9 +207,10 @@ function padScore(value) {
 
 script.getSpawnInterval = function (baseInterval) {
     var speedRatio = script.currentSpeed / script.config.startSpeed;
-
     return baseInterval / speedRatio;
 };
+
+script.resetHiScore = resetHiScore;
 
 script.createEvent("OnStartEvent").bind(initialize);
 script.createEvent("UpdateEvent").bind(updateGameManager);

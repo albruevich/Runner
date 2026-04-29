@@ -404,7 +404,6 @@
     prizeSpawnInterval: true
     prizeGroundY: true
     prizeJumpY: true
-    prizeObstacleCheckZDistance: true
     collisionZDistance: true
     laneTolerance: true
     startHp: true
@@ -426,7 +425,8 @@
       prizeGroundY: !<float> 6.000000
       prizeJumpY: !<float> 28.000000
       jumpPrizeChance: 0.450000
-      prizeObstacleCheckZDistance: !<float> 5.000000
+      prizeObstacleCheckZDistance: !<float> 80.000000
+      prizeObstacleHeightDistance: !<float> 10.000000
       collisionZDistance: !<float> 8.000000
       laneTolerance: 0.500000
       startHp: 3

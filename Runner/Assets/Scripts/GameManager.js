@@ -7,6 +7,7 @@
 //@input Component.Text scoreText
 //@input Component.Text gameOverText
 //@input Component.ScriptComponent audioManager
+//@input SceneObject playButton
 
 var hp = 0;
 var score = 0;
@@ -22,6 +23,7 @@ function initialize() {
     score = 0;
 
     script.isGameOver = false;
+    script.isStartPause = true;
     script.isHit = false;
     script.currentSpeed = script.config.startSpeed;
 
@@ -39,7 +41,7 @@ function initialize() {
 
 script.takeDamage = function () {
 
-    if (script.isGameOver || script.isHit) {
+    if (script.isGameOver || script.isHit || script.isStartPause) {
         return;
     }
 
@@ -90,7 +92,7 @@ script.addScore = function (amount) {
 
 function updateGameManager() {
 
-    if (script.isGameOver) {
+    if (script.isGameOver || script.isStartPause) {
         return;
     }
 
@@ -219,7 +221,28 @@ script.getSpawnInterval = function (baseInterval) {
     return baseInterval / speedRatio;
 };
 
+script.startGame = function () {
+
+    if (!script.isStartPause) {
+        return;
+    }
+
+    script.isStartPause = false;
+
+    if (script.playButton) {
+        script.playButton.enabled = false;
+    }
+
+    if (script.audioManager && script.audioManager.playMusic) {
+        script.audioManager.playMusic();
+    }
+};
+
 script.resetHiScore = resetHiScore;
 
 script.createEvent("OnStartEvent").bind(initialize);
 script.createEvent("UpdateEvent").bind(updateGameManager);
+
+script.createEvent("TapEvent").bind(function () {
+    script.startGame();
+});

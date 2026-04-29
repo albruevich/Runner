@@ -60,7 +60,11 @@ function initialize() {
 
 function moveLeft() {
 
-    if (script.gameManager && (script.gameManager.isGameOver || script.gameManager.isHit)) {
+    if (script.gameManager) {
+        script.gameManager.startGame();
+    }
+
+    if (script.gameManager && (script.gameManager.isGameOver || script.gameManager.isHit || script.gameManager.isStartPause)) {
         return;
     }
 
@@ -69,7 +73,11 @@ function moveLeft() {
 
 function moveRight() {
 
-    if (script.gameManager && (script.gameManager.isGameOver || script.gameManager.isHit)) {
+    if (script.gameManager) {
+        script.gameManager.startGame();
+    }
+
+    if (script.gameManager && (script.gameManager.isGameOver || script.gameManager.isHit || script.gameManager.isStartPause)) {
         return;
     }
 
@@ -78,7 +86,11 @@ function moveRight() {
 
 function jump() {
 
-    if (script.gameManager && (script.gameManager.isGameOver || script.gameManager.isHit)) {
+    if (script.gameManager) {
+        script.gameManager.startGame();
+    }
+
+    if (script.gameManager && (script.gameManager.isGameOver || script.gameManager.isHit || script.gameManager.isStartPause)) {
 
         if (script.gameManager.restartGame) {
             script.gameManager.restartGame();
@@ -100,7 +112,7 @@ function jump() {
 
 function updatePlayer() {
 
-    if (script.gameManager && script.gameManager.isGameOver) {
+    if (script.gameManager && (script.gameManager.isGameOver || script.gameManager.isStartPause)) {
         return;
     }
 

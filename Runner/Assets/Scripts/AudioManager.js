@@ -6,7 +6,7 @@
 
 function initialize() {
 
-    playMusic();
+    stopMusic();
 }
 
 function playMusic() {

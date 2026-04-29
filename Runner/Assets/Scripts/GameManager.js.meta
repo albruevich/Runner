@@ -31,6 +31,7 @@
     gameOverText: false
     hpText: false
     obstacleSpawner: false
+    playButton: false
     prizeSpawner: false
     scoreText: false
   ScriptTypesHidden:
@@ -49,6 +50,7 @@
       scoreText: !<reference.Text> 00000000-0000-0000-0000-000000000000
       gameOverText: !<reference.Text> 00000000-0000-0000-0000-000000000000
       audioManager: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      playButton: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
       {}

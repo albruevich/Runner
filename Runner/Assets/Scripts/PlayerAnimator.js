@@ -23,7 +23,7 @@ function updateAnimator() {
 
     updatePlaybackSpeed();
 
-    if (script.gameManager.isGameOver || script.gameManager.isHit) {
+    if (script.gameManager.isGameOver || script.gameManager.isHit || script.gameManager.isStartPause) {
         playIdle();
         return;
     }

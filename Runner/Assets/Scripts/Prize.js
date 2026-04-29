@@ -5,7 +5,7 @@
 
 function updatePrize() {
 
-    if (script.gameManager && (script.gameManager.isGameOver || script.gameManager.isHit)) {
+    if (script.gameManager && (script.gameManager.isGameOver || script.gameManager.isHit || script.gameManager.isStartPause)) {
         return;
     }
 

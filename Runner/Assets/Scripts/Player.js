@@ -145,6 +145,13 @@ function canControlPlayer() {
 
 function updatePlayer() {
     if (gameManager.isGameOver) {
+
+        if (shineImage) {
+            shineImage.enabled = false;
+        }
+
+        shineTimer = 0;
+
         resetJumpState();
         return;
     }

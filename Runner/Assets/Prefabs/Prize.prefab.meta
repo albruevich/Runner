@@ -14,26 +14,21 @@
   ImporterSettings: !<AssetImporterSettings>
     {}
   CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
-- !<RenderMeshVisual/0b904c6d-2725-4212-6157-a3ec022d1a5e>
+- !<SceneObject/0029c43a-416b-46cf-9dac-44ca8a50fd63>
   PrefabRemaps:
     []
-  Name: Render Mesh Visual
+  Name: Mesh
   Enabled: true
-  RenderOrder: 0
-  StretchMode: Stretch
-  VerticalAlignment: Center
-  HorizontalAlignment: Center
-  MeshShadowMode: None
-  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-  ShadowDensity: 1.000000
-  Materials:
-    - !<reference> 250c31b7-bc4a-458f-8ef7-07985eb356d8
-  Mesh: !<reference> 22c699d3-3871-4034-afac-5b7ab2864963
-  Skin: !<reference> 00000000-0000-0000-0000-000000000000
-  BlendShapesEnabled: true
-  BlendNormals: false
-  BlendShapes:
-    {}
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 92c71f6b-69a1-4b1f-b99c-6c7240ae9bb3
 - !<ObjectPrefabAssetData/0bb3a871-b746-4f67-8c75-4b26f8374d5c>
   Prototype: !<ObjectOwner/6afc0934-f302-4c8f-bce9-956b8d9ea222>
     PackagePath: ""
@@ -46,13 +41,14 @@
   Enabled: true
   ScriptAsset: !<reference> 4ca11c6d-7d87-4561-b837-858f2bb5b153
   ScriptInputsDefault:
-    {}
+    mesh: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
       gameManager: !<reference.ScriptComponent> 9db2195e-3371-497d-93a0-65d4cdb959d4
       config: !<reference.ScriptComponent> 30c255f4-8d61-4450-b454-76896d2fa707
+      mesh: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     "":
       {}
@@ -68,7 +64,26 @@
     Scale: {x: 5.000000, y: 5.000000, z: 5.000000}
     HasSegmentScaleCompensation: false
   Children:
-    []
+    - !<own> 0029c43a-416b-46cf-9dac-44ca8a50fd63
   Components:
-    - !<own> 0b904c6d-2725-4212-6157-a3ec022d1a5e
     - !<own> 410c6cd8-a4cf-4aec-562e-8973247a91d9
+- !<RenderMeshVisual/92c71f6b-69a1-4b1f-b99c-6c7240ae9bb3>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: Caster
+  ShadowColor: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+  ShadowDensity: 0.600000
+  Materials:
+    - !<reference> cba9077a-c9da-4d11-b78d-b09a7a88e0d4
+  Mesh: !<reference> 35846f73-e25e-4117-8a00-8afefa614faf
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}

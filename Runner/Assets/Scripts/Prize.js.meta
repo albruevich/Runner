@@ -28,6 +28,7 @@
   ScriptInputsHidden:
     config: false
     gameManager: false
+    mesh: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -39,6 +40,7 @@
   DefaultScriptInputs:
     - gameManager: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
       config: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
+      mesh: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
       {}

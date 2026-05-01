@@ -10,19 +10,27 @@ var config;
 var gameManager;
 
 function initialize() {
+
     cacheReferences();
 
     if (!targetObject) {
         print("Obstacle targetObject is not assigned.");
-        return;
+        return false;
     }
 
     if (!config) {
         print("Obstacle config is not assigned.");
-        return;
+        return false;
+    }
+
+    if (!gameManager) {
+        print("Obstacle gameManager is not assigned.");
+        return false;
     }
 
     targetTransform = targetObject.getTransform();
+
+    return true;
 }
 
 function cacheReferences() {
@@ -33,11 +41,7 @@ function cacheReferences() {
 
 function updateObstacle() {
 
-    if (!targetObject || !targetTransform || !config) {
-        return;
-    }
-
-    if (gameManager && (gameManager.isGameOver || gameManager.isHit || gameManager.isStartPause)) {
+    if (gameManager.isGameOver || gameManager.isHit || gameManager.isStartPause) {
         return;
     }
 
@@ -48,8 +52,7 @@ function updateObstacle() {
     var dt = getDeltaTime();
     var pos = targetTransform.getLocalPosition();
 
-    var speed = gameManager ? gameManager.currentSpeed : config.startSpeed;
-    pos.z += speed * dt;
+    pos.z += gameManager.currentSpeed * dt;
 
     if (pos.z > config.obstacleHideZ) {
         targetObject.enabled = false;
@@ -59,6 +62,6 @@ function updateObstacle() {
     targetTransform.setLocalPosition(pos);
 }
 
-initialize();
-
-script.createEvent("UpdateEvent").bind(updateObstacle);
+if (initialize()) {
+    script.createEvent("UpdateEvent").bind(updateObstacle);
+}

@@ -9,19 +9,27 @@ var sceneObject;
 var transform;
 
 function initialize() {
+
     cacheReferences();
 
     if (!config) {
         print("Prize config is not assigned.");
-        return;
+        return false;
+    }
+
+    if (!gameManager) {
+        print("Prize gameManager is not assigned.");
+        return false;
     }
 
     if (!sceneObject) {
         print("Prize sceneObject is missing.");
-        return;
+        return false;
     }
 
     transform = sceneObject.getTransform();
+
+    return true;
 }
 
 function cacheReferences() {
@@ -32,11 +40,7 @@ function cacheReferences() {
 
 function updatePrize() {
 
-    if (!sceneObject || !transform || !config) {
-        return;
-    }
-
-    if (gameManager && (gameManager.isGameOver || gameManager.isHit || gameManager.isStartPause)) {
+    if (gameManager.isGameOver || gameManager.isHit || gameManager.isStartPause) {
         return;
     }
 
@@ -47,8 +51,7 @@ function updatePrize() {
     var dt = getDeltaTime();
     var pos = transform.getLocalPosition();
 
-    var speed = gameManager ? gameManager.currentSpeed : config.startSpeed;
-    pos.z += speed * dt;
+    pos.z += gameManager.currentSpeed * dt;
 
     if (pos.z > config.obstacleHideZ) {
         sceneObject.enabled = false;
@@ -58,6 +61,6 @@ function updatePrize() {
     transform.setLocalPosition(pos);
 }
 
-initialize();
-
-script.createEvent("UpdateEvent").bind(updatePrize);
+if (initialize()) {
+    script.createEvent("UpdateEvent").bind(updatePrize);
+}

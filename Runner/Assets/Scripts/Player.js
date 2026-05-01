@@ -19,14 +19,14 @@ var shineImage;
 var shineImageComponent;
 var audioManager;
 
-var currentLane = 0; // -1 = left, 0 = center, 1 = right
+var currentLane = 0;
 
 var moveSpeed = 20;
 var jumpHeight = 30;
 
 var jumpUpSpeed = 20;
 var jumpDownSpeed = 3;
-var hangTime = 0.1; // pause at the top
+var hangTime = 0.1;
 
 var jumpProgress = 0;
 var hangTimer = 0;
@@ -50,14 +50,29 @@ var shineStartAlpha = 1.0;
 function initialize() {
     cacheReferences();
 
+    if (!gameManager) {
+        print("Player gameManager is not assigned.");
+        return false;
+    }
+
     if (!targetObject) {
-        print("Target is not assigned.");
-        return;
+        print("Player targetObject is not assigned.");
+        return false;
     }
 
     if (!config) {
-        print("Config is not assigned.");
-        return;
+        print("Player config is not assigned.");
+        return false;
+    }
+
+    if (!obstacleSpawner) {
+        print("Player obstacleSpawner is not assigned.");
+        return false;
+    }
+
+    if (!prizeSpawner) {
+        print("Player prizeSpawner is not assigned.");
+        return false;
     }
 
     targetTransform = targetObject.getTransform();
@@ -70,6 +85,8 @@ function initialize() {
     if (shineImage) {
         shineImage.enabled = false;
     }
+
+    return true;
 }
 
 function cacheReferences() {
@@ -84,7 +101,6 @@ function cacheReferences() {
 }
 
 function moveLeft() {
-
     if (!canControlPlayer()) {
         return;
     }
@@ -93,7 +109,6 @@ function moveLeft() {
 }
 
 function moveRight() {
-
     if (!canControlPlayer()) {
         return;
     }
@@ -102,11 +117,6 @@ function moveRight() {
 }
 
 function jump() {
-
-    if (!gameManager) {
-        return;
-    }
-
     gameManager.startGame();
 
     if (gameManager.isGameOver) {
@@ -126,11 +136,6 @@ function jump() {
 }
 
 function canControlPlayer() {
-
-    if (!gameManager) {
-        return false;
-    }
-
     gameManager.startGame();
 
     return !gameManager.isGameOver &&
@@ -139,11 +144,6 @@ function canControlPlayer() {
 }
 
 function updatePlayer() {
-
-    if (!gameManager || !targetTransform || !config) {
-        return;
-    }
-
     if (gameManager.isGameOver) {
         resetJumpState();
         return;
@@ -175,11 +175,8 @@ function updateMovement(pos, dt, speedMultiplier) {
 }
 
 function updateJump(pos, dt, speedMultiplier) {
-
     if (isJumping) {
-
         if (!isHanging && !isFalling) {
-
             jumpProgress += dt * jumpUpSpeed * speedMultiplier;
 
             if (jumpProgress >= 1) {
@@ -189,7 +186,6 @@ function updateJump(pos, dt, speedMultiplier) {
             }
 
         } else if (isHanging) {
-
             hangTimer -= dt * speedMultiplier;
 
             if (hangTimer <= 0) {
@@ -198,7 +194,6 @@ function updateJump(pos, dt, speedMultiplier) {
             }
 
         } else if (isFalling) {
-
             jumpProgress -= dt * jumpDownSpeed * speedMultiplier;
 
             if (jumpProgress <= 0) {
@@ -210,36 +205,19 @@ function updateJump(pos, dt, speedMultiplier) {
         }
 
         pos.y = baseY + smoothStep(jumpProgress) * jumpHeight;
-
     } else {
         pos.y = baseY;
     }
 }
 
 function updatePendingHitObstacle() {
-
     if (pendingHitObstacle && !gameManager.isHit) {
         pendingHitObstacle.enabled = false;
         pendingHitObstacle = null;
     }
 }
 
-function lerp(a, b, t) {
-    t = Math.min(Math.max(t, 0), 1);
-    return a + (b - a) * t;
-}
-
-function smoothStep(t) {
-    t = Math.min(Math.max(t, 0), 1);
-    return t * t * (3 - 2 * t);
-}
-
 function checkObstacleCollisions(playerPos) {
-
-    if (!obstacleSpawner) {
-        return;
-    }
-
     var obstacles = obstacleSpawner.pool;
 
     if (!obstacles) {
@@ -254,7 +232,6 @@ function checkObstacleCollisions(playerPos) {
         }
 
         var obstaclePos = obstacle.getTransform().getLocalPosition();
-
         var dz = Math.abs(playerPos.z - obstaclePos.z);
 
         var sameLane = Math.abs(playerPos.x - obstaclePos.x) < config.laneTolerance;
@@ -270,11 +247,6 @@ function checkObstacleCollisions(playerPos) {
 }
 
 function checkPrizeCollisions(playerPos) {
-
-    if (!prizeSpawner) {
-        return;
-    }
-
     var prizes = prizeSpawner.pool;
 
     if (!prizes) {
@@ -289,7 +261,6 @@ function checkPrizeCollisions(playerPos) {
         }
 
         var prizePos = prize.getTransform().getLocalPosition();
-
         var dz = Math.abs(playerPos.z - prizePos.z);
 
         var sameLane = Math.abs(playerPos.x - prizePos.x) < config.laneTolerance;
@@ -316,7 +287,6 @@ function onCollectPrize(prize) {
 }
 
 function onHitObstacle(obstacle) {
-
     if (pendingHitObstacle) {
         return;
     }
@@ -335,7 +305,6 @@ function getGameSpeedMultiplier() {
 }
 
 function playShineEffect() {
-
     shineTimer = shineDuration;
 
     if (shineImage) {
@@ -346,7 +315,6 @@ function playShineEffect() {
 }
 
 function updateShineEffect(dt) {
-
     if (!shineImage || shineTimer <= 0) {
         return;
     }
@@ -362,7 +330,6 @@ function updateShineEffect(dt) {
 }
 
 function setShineAlpha(alpha) {
-
     if (!shineImageComponent) {
         return;
     }
@@ -384,55 +351,65 @@ function resetJumpState() {
     targetTransform.setLocalPosition(pos);
 }
 
-initialize();
+function lerp(a, b, t) {
+    t = Math.min(Math.max(t, 0), 1);
+    return a + (b - a) * t;
+}
 
-script.createEvent("UpdateEvent").bind(updatePlayer);
+function smoothStep(t) {
+    t = Math.min(Math.max(t, 0), 1);
+    return t * t * (3 - 2 * t);
+}
 
-script.createEvent("TouchStartEvent").bind(function (eventData) {
-    var pos = eventData.getTouchPosition();
+if (initialize()) {
+    script.createEvent("UpdateEvent").bind(updatePlayer);
 
-    touchStartX = pos.x;
-    touchStartY = pos.y;
-});
+    script.createEvent("TouchStartEvent").bind(function (eventData) {
+        var pos = eventData.getTouchPosition();
 
-script.createEvent("TouchEndEvent").bind(function (eventData) {
-    var pos = eventData.getTouchPosition();
+        touchStartX = pos.x;
+        touchStartY = pos.y;
+    });
 
-    var deltaX = pos.x - touchStartX;
-    var deltaY = pos.y - touchStartY;
+    script.createEvent("TouchEndEvent").bind(function (eventData) {
+        var pos = eventData.getTouchPosition();
 
-    if (Math.abs(deltaX) > Math.abs(deltaY)) {
-        if (Math.abs(deltaX) < swipeThreshold) {
-            return;
-        }
+        var deltaX = pos.x - touchStartX;
+        var deltaY = pos.y - touchStartY;
 
-        if (deltaX < 0) {
-            moveLeft();
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+            if (Math.abs(deltaX) < swipeThreshold) {
+                return;
+            }
+
+            if (deltaX < 0) {
+                moveLeft();
+            } else {
+                moveRight();
+            }
         } else {
-            moveRight();
-        }
-    } else {
-        if (Math.abs(deltaY) < swipeThreshold) {
-            return;
-        }
+            if (Math.abs(deltaY) < swipeThreshold) {
+                return;
+            }
 
-        if (deltaY < 0) {
+            if (deltaY < 0) {
+                jump();
+            }
+        }
+    });
+
+    script.createEvent("KeyPressEvent").bind(function (eventData) {
+        var key = eventData.key;
+
+        if (key === 16777234) {
+            moveLeft();
+        } else if (key === 16777236) {
+            moveRight();
+        } else if (key === 16777235 || key === 32) {
             jump();
         }
-    }
-});
-
-script.createEvent("KeyPressEvent").bind(function (eventData) {
-    var key = eventData.key;
-
-    if (key === 16777234) { // Left Arrow
-        moveLeft();
-    } else if (key === 16777236) { // Right Arrow
-        moveRight();
-    } else if (key === 16777235 || key === 32) { // Up Arrow and Space bar
-        jump();
-    }
-});
+    });
+}
 
 script.isPlayerJumping = function () {
     return isJumping;

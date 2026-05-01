@@ -27,8 +27,32 @@ var scoreScaleEffect;
 var hearts;
 
 function initialize() {
-
     cacheReferences();
+
+    if (!config) {
+        print("GameManager config is not assigned.");
+        return false;
+    }
+
+    if (!obstacleSpawner) {
+        print("GameManager obstacleSpawner is not assigned.");
+        return false;
+    }
+
+    if (!prizeSpawner) {
+        print("GameManager prizeSpawner is not assigned.");
+        return false;
+    }
+
+    if (!audioManager) {
+        print("GameManager audioManager is not assigned.");
+        return false;
+    }
+
+    if (!scoreScaleEffect) {
+        print("GameManager scoreScaleEffect is not assigned.");
+        return false;
+    }
 
     hp = getMaxHp();
     score = 0;
@@ -41,15 +65,11 @@ function initialize() {
     obstacleSpawnTimer = 0;
     prizeSpawnTimer = 0;
 
-    var store = global.persistentStorageSystem.store;
-
-    if (store.has("highScore")) {
-        highScore = store.getInt("highScore");
-    }
-
+    loadHighScore();
     setupRoadWidth();
-
     refreshUI();
+
+    return true;
 }
 
 function cacheReferences() {
@@ -61,9 +81,16 @@ function cacheReferences() {
     hearts = script.hearts;
 }
 
-function setupRoadWidth() {
+function loadHighScore() {
+    var store = global.persistentStorageSystem.store;
 
-    if (!script.road || !config) {
+    if (store.has("highScore")) {
+        highScore = store.getInt("highScore");
+    }
+}
+
+function setupRoadWidth() {
+    if (!script.road) {
         return;
     }
 
@@ -80,7 +107,6 @@ function getMaxHp() {
 }
 
 script.takeDamage = function () {
-
     if (script.isGameOver || script.isHit || script.isStartPause) {
         return;
     }
@@ -98,7 +124,6 @@ script.takeDamage = function () {
 };
 
 script.restartGame = function () {
-
     hp = getMaxHp();
     score = 0;
 
@@ -126,14 +151,14 @@ script.addScore = function (amount) {
 };
 
 function updateGameManager() {
-
     if (script.isGameOver || script.isStartPause) {
         return;
     }
 
-    if (script.isHit) {
+    var dt = getDeltaTime();
 
-        hitTimer -= getDeltaTime();
+    if (script.isHit) {
+        hitTimer -= dt;
 
         if (hitTimer <= 0) {
             script.isHit = false;
@@ -142,23 +167,19 @@ function updateGameManager() {
         return;
     }
 
-    updateSpeed();
-    updateSpawning();
+    updateSpeed(dt);
+    updateSpawning(dt);
 }
 
-function updateSpeed() {
-
-    script.currentSpeed += config.speedIncreasePerSecond * getDeltaTime();
+function updateSpeed(dt) {
+    script.currentSpeed += config.speedIncreasePerSecond * dt;
 
     if (script.currentSpeed > config.maxSpeed) {
         script.currentSpeed = config.maxSpeed;
     }
 }
 
-function updateSpawning() {
-
-    var dt = getDeltaTime();
-
+function updateSpawning(dt) {
     obstacleSpawnTimer -= dt;
     prizeSpawnTimer -= dt;
 
@@ -174,7 +195,6 @@ function updateSpawning() {
 }
 
 function gameOver() {
-
     script.isGameOver = true;
     script.isHit = false;
     hitTimer = 0;
@@ -195,7 +215,6 @@ function saveHighScore() {
 }
 
 function resetHiScore() {
-
     highScore = 0;
 
     var store = global.persistentStorageSystem.store;
@@ -205,7 +224,6 @@ function resetHiScore() {
 }
 
 function refreshUI() {
-
     updateHearts();
 
     if (script.scoreText) {
@@ -214,15 +232,12 @@ function refreshUI() {
     }
 
     if (script.gameOverText) {
-
         if (script.isGameOver) {
-
             var isNewHiScore = score >= highScore && score > 0;
 
             script.gameOverText.text = isNewHiScore
                 ? "GAME OVER\n\nNEW HI SCORE: " + padScore(highScore) + "\n\nJump to Restart"
                 : "GAME OVER\n\nJump to Restart";
-
         } else {
             script.gameOverText.text = "";
         }
@@ -230,13 +245,11 @@ function refreshUI() {
 }
 
 function updateHearts() {
-
     if (!hearts) {
         return;
     }
 
     for (var i = 0; i < hearts.length; i++) {
-
         var heart = hearts[i];
 
         if (heart) {
@@ -261,7 +274,6 @@ script.getSpawnInterval = function (baseInterval) {
 };
 
 script.startGame = function () {
-
     if (!script.isStartPause) {
         return;
     }
@@ -277,9 +289,12 @@ script.startGame = function () {
 
 script.resetHiScore = resetHiScore;
 
-script.createEvent("OnStartEvent").bind(initialize);
-script.createEvent("UpdateEvent").bind(updateGameManager);
+script.createEvent("OnStartEvent").bind(function () {
+    if (initialize()) {
+        script.createEvent("UpdateEvent").bind(updateGameManager);
 
-script.createEvent("TapEvent").bind(function () {
-    script.startGame();
+        script.createEvent("TapEvent").bind(function () {
+            script.startGame();
+        });
+    }
 });

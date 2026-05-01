@@ -597,7 +597,7 @@
       Disabled: false
       BlendMode: Default
       ScaleMode: Multiply
-      PlaybackMode: Loop
+      PlaybackMode: PingPong
 - !<SceneObject/43e11dcb-b4b0-4280-b4a8-39df4a637728>
   PrefabRemaps:
     []

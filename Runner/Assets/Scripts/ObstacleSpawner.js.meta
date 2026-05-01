@@ -28,7 +28,8 @@
   ScriptInputsHidden:
     config: false
     gameManager: false
-    obstaclePrefab: false
+    obstacleBottomPrefab: false
+    obstacleTopPrefab: false
     prizeSpawner: false
   ScriptTypesHidden:
     {}
@@ -41,7 +42,8 @@
   DefaultScriptInputs:
     - gameManager: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
       config: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
-      obstaclePrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
+      obstacleTopPrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
+      obstacleBottomPrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
       prizeSpawner: !<reference.ScriptComponent> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -

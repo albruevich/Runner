@@ -2,12 +2,14 @@
 
 //@input Component.ScriptComponent gameManager
 //@input Component.ScriptComponent config
-//@input Asset.ObjectPrefab obstaclePrefab
+//@input Asset.ObjectPrefab obstacleTopPrefab
+//@input Asset.ObjectPrefab obstacleBottomPrefab
 //@input Component.ScriptComponent prizeSpawner
 
 var gameManager;
 var config;
-var obstaclePrefab;
+var obstacleTopPrefab;
+var obstacleBottomPrefab;
 var prizeSpawner;
 
 var pool = [];
@@ -21,8 +23,13 @@ function initialize() {
         return;
     }
 
-    if (!obstaclePrefab) {
-        print("ObstacleSpawner: obstaclePrefab is not assigned.");
+    if (!obstacleTopPrefab) {
+        print("ObstacleSpawner: obstacleTopPrefab is not assigned.");
+        return;
+    }
+
+    if (!obstacleBottomPrefab) {
+        print("ObstacleSpawner: obstacleBottomPrefab is not assigned.");
         return;
     }
 
@@ -33,7 +40,8 @@ function initialize() {
 function cacheReferences() {
     gameManager = script.gameManager;
     config = script.config;
-    obstaclePrefab = script.obstaclePrefab;
+    obstacleTopPrefab = script.obstacleTopPrefab;
+    obstacleBottomPrefab = script.obstacleBottomPrefab;
     prizeSpawner = script.prizeSpawner;
 }
 
@@ -43,7 +51,9 @@ function createPool() {
     script.pool = pool;
 
     for (var i = 0; i < config.obstaclePoolSize; i++) {
-        var obstacle = obstaclePrefab.instantiate(null);
+
+        var prefab = (i % 2 === 0) ? obstacleBottomPrefab : obstacleTopPrefab;
+        var obstacle = prefab.instantiate(null);
 
         obstacle.name = "Obstacle_" + i;
         obstacle.enabled = false;
@@ -61,15 +71,15 @@ function createPool() {
 
 function spawnObstacle() {
 
-    var obstacle = getNextInactiveObstacle();
-
-    if (!obstacle) {
-        return;
-    }
-
     var position = findFreeObstaclePosition();
 
     if (!position) {
+        return;
+    }
+
+    var obstacle = getNextInactiveObstacle(position.y);
+
+    if (!obstacle) {
         return;
     }
 
@@ -158,7 +168,7 @@ function shuffle(array) {
     }
 }
 
-function getNextInactiveObstacle() {
+function getNextInactiveObstacle(targetY) {
 
     for (var i = 0; i < pool.length; i++) {
 
@@ -170,10 +180,16 @@ function getNextInactiveObstacle() {
 
         if (!obstacle.enabled) {
 
-            // Save next index
-            nextObstacleIndex = (index + 1) % pool.length;
+            var isBottom = targetY === config.obstacleGroundY;
+            var shouldUseBottom = obstacle.name.indexOf("Obstacle_") === 0 && (index % 2 === 0);
 
-            return obstacle;
+            if (isBottom === shouldUseBottom) {
+
+                // Save next index
+                nextObstacleIndex = (index + 1) % pool.length;
+
+                return obstacle;
+            }
         }
     }
 

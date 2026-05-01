@@ -43,7 +43,7 @@ git lfs pull
 
 ## Демонстрація
 
-![Demo](docs/demo.gif)
+<img src="docs/demo.gif" width="300">
 
 ## Керування
 

@@ -43,7 +43,7 @@ Some other preview environments (such as Idle / Face modes) may affect camera fr
 
 ## Demo
 
-![Demo](docs/demo.gif)
+<img src="docs/demo.gif" width="300">
 
 ## Controls
 

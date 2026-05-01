@@ -146,8 +146,12 @@ function isPositionFree(x, y, z) {
 function shuffle(array) {
 
     for (var i = array.length - 1; i > 0; i--) {
+
+        // Multiply random value by (i + 1) to get range from 0 to i,
+        // then use floor to convert it to integer index
         var j = Math.floor(Math.random() * (i + 1));
 
+        // Swap two objects in array
         var temp = array[i];
         array[i] = array[j];
         array[j] = temp;
@@ -157,11 +161,18 @@ function shuffle(array) {
 function getNextInactiveObstacle() {
 
     for (var i = 0; i < pool.length; i++) {
+
+        // Take the next saved index
+        // and make sure it does not go beyond pool size
         var index = (nextObstacleIndex + i) % pool.length;
+
         var obstacle = pool[index];
 
         if (!obstacle.enabled) {
+
+            // Save next index
             nextObstacleIndex = (index + 1) % pool.length;
+
             return obstacle;
         }
     }

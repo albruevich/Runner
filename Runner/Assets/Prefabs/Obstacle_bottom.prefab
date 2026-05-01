@@ -18,25 +18,25 @@
   ShadowColor: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
   ShadowDensity: 0.600000
   Materials:
-    - !<reference> f6727a7e-0116-424a-b3b1-2f61d3bbd993
-  Mesh: !<reference> a3ca7711-5139-4f50-a5b9-e8822c91ff99
+    - !<reference> 8ae83b29-fd81-49d4-a945-165feebc6855
+  Mesh: !<reference> 49695206-cbbb-4c8a-873b-742413ebf920
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
   BlendNormals: false
   BlendShapes:
-    {}
+    Hazard_tile_blendshape: 0.000000
 - !<SceneObject/7ec0e5b4-b1e2-4a39-b1e4-b05c9ae332d1>
   PrefabRemaps:
     - 5f0eeba4-b6ec-4d42-99fb-7837f816cecd: 506c27c3-c721-43f4-b8da-986a63f58a30
     - 7ec0e5b4-b1e2-4a39-b1e4-b05c9ae332d1: d54ae862-db7c-4971-8acd-62cf306dd807
     - b0372345-13da-4baf-a462-e1acd625acb9: e5c27d7e-5abf-4c51-b76d-1fd664608eec
-  Name: Obstacle_top
+  Name: Obstacle_bottom
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 0.170000, y: 0.170000, z: 0.170000}
+    Scale: {x: 0.200000, y: 0.200000, z: 0.200000}
     HasSegmentScaleCompensation: false
   Children:
     []

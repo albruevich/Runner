@@ -546,7 +546,8 @@
     "":
       gameManager: !<reference.ScriptComponent> 9db2195e-3371-497d-93a0-65d4cdb959d4
       config: !<reference.ScriptComponent> 30c255f4-8d61-4450-b454-76896d2fa707
-      obstaclePrefab: !<reference.ObjectPrefab> 4a5c0ff3-27b9-4b3b-b824-27ac0d832fd0
+      obstacleTopPrefab: !<reference.ObjectPrefab> 4a5c0ff3-27b9-4b3b-b824-27ac0d832fd0
+      obstacleBottomPrefab: !<reference.ObjectPrefab> 6de9eefb-91ef-4a3d-a9dc-578ef5967dde
       prizeSpawner: !<reference.ScriptComponent> e5b305a0-3dd6-4939-a3f4-b67bd73a6505
   ScriptTypes:
     "":
@@ -1238,7 +1239,7 @@
   OverflowHorizontal: Overflow
   Fill: !<TextFill>
     Mode: Solid
-    Color: {x: 0.134768, y: 1.000000, z: 0.190784, w: 1.000000}
+    Color: {x: 0.963363, y: 0.853422, z: 0.035004, w: 1.000000}
     Texture: !<reference> 00000000-0000-0000-0000-000000000000
     ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
     TileCount: 5.000000
@@ -1322,7 +1323,7 @@
   OverflowHorizontal: Overflow
   Fill: !<TextFill>
     Mode: Solid
-    Color: {x: 1.000000, y: 0.360098, z: 0.105211, w: 1.000000}
+    Color: {x: 0.979858, y: 0.017746, z: 0.007263, w: 1.000000}
     Texture: !<reference> 00000000-0000-0000-0000-000000000000
     ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
     TileCount: 5.000000
